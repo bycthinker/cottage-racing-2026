@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cottage Racing Championship 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0A0F;
+    --surface: #13131C;
+    --surface2: #1C1C2A;
+    --border: #2A2A3E;
+    --text: #E8E8F0;
+    --muted: #7A7A9A;
+    --red: #E63946;
+    --gold: #FFB703;
+    --blue: #4CC9F0;
+    --green: #06D6A0;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* TRACK LINE DECORATION */
+  .track-line {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--red), var(--gold), var(--blue), transparent);
+  }
+
+  /* HEADER */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 0;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .logo-block { display: flex; flex-direction: column; gap: 2px; }
+
+  .logo-eyebrow {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .logo-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--white);
+    letter-spacing: 0.05em;
+  }
+
+  .logo-title span { color: var(--red); }
+
+  .header-stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .stat-pill .val {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-pill .lbl {
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .live-badge {
+    background: var(--red);
+    color: white;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    animation: pulse-badge 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-badge {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.65; }
+  }
+
+  /* MAIN */
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  /* === CHAMPIONNAT GENERAL === */
+  .champ-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 2.5rem;
+    overflow: hidden;
+  }
+
+  .champ-header {
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .champ-header h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--white);
+  }
+
+  .progress-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .progress-track {
+    width: 120px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--red), var(--gold));
+    border-radius: 2px;
+    transition: width 1.2s ease;
+  }
+
+  /* LEADERBOARD */
+  .leaderboard { padding: 0; }
+
+  .lb-row {
+    display: grid;
+    grid-template-columns: 48px 1fr repeat(4, 72px) 90px;
+    align-items: center;
+    padding: 0.9rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    gap: 0.5rem;
+    transition: background 0.15s;
+  }
+
+  .lb-row:last-child { border-bottom: none; }
+  .lb-row:hover { background: rgba(255,255,255,0.03); }
+
+  .lb-row.header-row {
+    padding: 0.5rem 1.5rem;
+    background: var(--surface2);
+  }
+
+  .lb-row.header-row span {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .rank {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .rank-1 { color: var(--gold); }
+  .rank-2 { color: #C0C0C0; }
+  .rank-3 { color: #CD7F32; }
+  .rank-4 { color: var(--muted); }
+
+  .pilot-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--white);
+  }
+
+  .cat-pts {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    text-align: center;
+  }
+
+  .total-pts {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    text-align: right;
+  }
+
+  /* POINTS BAR */
+  .points-bar-wrap {
+    padding: 0 1.5rem 1.2rem;
+  }
+
+  .points-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .points-bar-name {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    width: 70px;
+    flex-shrink: 0;
+    color: var(--muted);
+  }
+
+  .points-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .points-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1.5s cubic-bezier(.4,0,.2,1);
+  }
+
+  .fill-1 { background: linear-gradient(90deg, var(--gold), #FFD60A); }
+  .fill-2 { background: linear-gradient(90deg, var(--blue), #7EB8F7); }
+  .fill-3 { background: linear-gradient(90deg, var(--green), #52E0C4); }
+  .fill-4 { background: linear-gradient(90deg, var(--red), #FF6B75); }
+
+  .points-bar-val {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    width: 36px;
+    text-align: right;
+    color: var(--text);
+    flex-shrink: 0;
+  }
+
+  /* TABS */
+  .tabs-wrap { margin-bottom: 2.5rem; }
+
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs-nav::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.75rem 1.4rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+    margin-bottom: -1px;
+  }
+
+  .tab-btn.active {
+    color: var(--white);
+    border-bottom-color: var(--red);
+  }
+
+  .tab-btn:hover:not(.active) { color: var(--text); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* MANCHE BLOCK */
+  .manche-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .manche-header {
+    padding: 1rem 1.5rem;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .manche-num {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .manche-date {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+
+  .manche-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-left: auto;
+  }
+
+  .badge {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .badge-pole { background: rgba(76,201,240,0.15); color: var(--blue); border: 1px solid rgba(76,201,240,0.3); }
+  .badge-winner { background: rgba(255,183,3,0.15); color: var(--gold); border: 1px solid rgba(255,183,3,0.3); }
+  .badge-fl { background: rgba(6,214,160,0.15); color: var(--green); border: 1px solid rgba(6,214,160,0.3); }
+
+  /* SESSIONS */
+  .sessions-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  @media (max-width: 700px) { .sessions-grid { grid-template-columns: 1fr; } }
+
+  .session-block {
+    padding: 1rem 1.5rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .session-block:last-child { border-right: none; }
+
+  .session-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .session-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+
+  .session-table th {
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    padding: 4px 8px 6px 0;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .session-table td {
+    padding: 5px 8px 5px 0;
+    border-bottom: 1px solid rgba(42,42,62,0.5);
+    vertical-align: middle;
+  }
+
+  .session-table tr:last-child td { border-bottom: none; }
+
+  .pos-badge {
+    display: inline-flex;
+    width: 20px;
+    height: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+
+  .pos-1 { background: rgba(255,183,3,0.2); color: var(--gold); }
+  .pos-2 { background: rgba(192,192,192,0.15); color: #C0C0C0; }
+  .pos-3 { background: rgba(205,127,50,0.15); color: #CD7F32; }
+  .pos-4 { background: rgba(122,122,154,0.1); color: var(--muted); }
+
+  .pilot-cell {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--white);
+  }
+
+  .time-cell {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .pts-cell {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--gold);
+    text-align: right;
+  }
+
+  .icon-fl { color: var(--green); font-size: 0.65rem; margin-left: 3px; }
+  .icon-pole { color: var(--blue); font-size: 0.65rem; margin-left: 3px; }
+
+  /* UPCOMING */
+  .upcoming-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .upcoming-header {
+    padding: 1rem 1.5rem;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .upcoming-header h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .upcoming-list { padding: 0.5rem 0; }
+
+  .upcoming-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.7rem 1.5rem;
+    border-bottom: 1px solid rgba(42,42,62,0.6);
+  }
+
+  .upcoming-item:last-child { border-bottom: none; }
+
+  .upcoming-manche {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    width: 56px;
+    flex-shrink: 0;
+  }
+
+  .upcoming-date {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+
+  .status-badge {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 2px;
+  }
+
+  .status-done { background: rgba(6,214,160,0.12); color: var(--green); border: 1px solid rgba(6,214,160,0.25); }
+  .status-confirmed { background: rgba(76,201,240,0.12); color: var(--blue); border: 1px solid rgba(76,201,240,0.25); }
+  .status-estimated { background: rgba(122,122,154,0.1); color: var(--muted); border: 1px solid rgba(122,122,154,0.2); }
+
+  /* REGLEMENT */
+  .reglement-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (max-width: 600px) { .reglement-grid { grid-template-columns: 1fr; } }
+
+  .reg-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1.2rem 1.5rem;
+  }
+
+  .reg-card h4 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .score-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(42,42,62,0.5);
+  }
+
+  .score-row:last-child { border-bottom: none; }
+
+  .score-label {
+    font-size: 0.82rem;
+    color: var(--text);
+  }
+
+  .score-val {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--gold);
+  }
+
+  .cat-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 6px 10px;
+    margin: 4px 4px 4px 0;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .cat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 1.2rem 2rem;
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .lb-row {
+      grid-template-columns: 40px 1fr repeat(4, 56px) 72px;
+      padding: 0.8rem 1rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    main { padding: 1rem; }
+    .lb-row {
+      grid-template-columns: 36px 1fr repeat(2, 52px) 64px;
+    }
+    .lb-cat-bmw, .lb-cat-aston { display: none; }
+    .header-stats { gap: 1rem; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .champ-block, .tabs-wrap { animation: slideUp 0.5s ease forwards; }
+
+  /* PILOT COLORS */
+  .p-manu { color: var(--gold); }
+  .p-brice { color: var(--blue); }
+  .p-alain { color: var(--green); }
+  .p-philippe { color: var(--red); }
+</style>
+</head>
+<body>
+
+<div class="track-line"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="logo-block">
+      <span class="logo-eyebrow">Carrera Digital 132</span>
+      <h1 class="logo-title">COTTAGE RACING <span>CHAMPIONSHIP</span> 2026</h1>
+    </div>
+    <div class="header-stats">
+      <div class="stat-pill">
+        <span class="val">4</span>
+        <span class="lbl">Pilotes</span>
+      </div>
+      <div class="stat-pill">
+        <span class="val">4</span>
+        <span class="lbl">Catégories</span>
+      </div>
+      <div class="stat-pill">
+        <span class="val" id="manchesJouees">2</span>
+        <span class="lbl">Manches</span>
+      </div>
+      <div class="stat-pill">
+        <span class="val">8</span>
+        <span class="lbl">Total</span>
+      </div>
+      <span class="live-badge">LIVE STANDINGS</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ===== CLASSEMENT GÉNÉRAL ===== -->
+  <div class="section-title">Classement Général</div>
+
+  <div class="champ-block">
+    <div class="champ-header">
+      <h2>Championnat — Toutes catégories</h2>
+      <div class="progress-label">
+        <span>Progression saison</span>
+        <div class="progress-track">
+          <div class="progress-fill" style="width: 25%"></div>
+        </div>
+        <span>2/8 manches</span>
+      </div>
+    </div>
+
+    <!-- Header row -->
+    <div class="lb-row header-row">
+      <span>#</span>
+      <span>Pilote</span>
+      <span style="text-align:center" class="lb-cat-bmw">BMW</span>
+      <span style="text-align:center" class="lb-cat-aston">Aston</span>
+      <span style="text-align:center">Porsche</span>
+      <span style="text-align:center">McLaren</span>
+      <span style="text-align:right">Total</span>
+    </div>
+
+    <!-- Rows -->
+    <div class="lb-row">
+      <span class="rank rank-1">1</span>
+      <span class="pilot-name p-manu">Manu</span>
+      <span class="cat-pts lb-cat-bmw">24</span>
+      <span class="cat-pts lb-cat-aston">24</span>
+      <span class="cat-pts">16</span>
+      <span class="cat-pts">13</span>
+      <span class="total-pts">77</span>
+    </div>
+    <div class="lb-row">
+      <span class="rank rank-2">2</span>
+      <span class="pilot-name p-brice">Brice</span>
+      <span class="cat-pts lb-cat-bmw">7</span>
+      <span class="cat-pts lb-cat-aston">10</span>
+      <span class="cat-pts">14</span>
+      <span class="cat-pts">13</span>
+      <span class="total-pts">44</span>
+    </div>
+    <div class="lb-row">
+      <span class="rank rank-3">3</span>
+      <span class="pilot-name p-alain">Alain</span>
+      <span class="cat-pts lb-cat-bmw">7</span>
+      <span class="cat-pts lb-cat-aston">6</span>
+      <span class="cat-pts">13</span>
+      <span class="cat-pts">14</span>
+      <span class="total-pts">40</span>
+    </div>
+    <div class="lb-row">
+      <span class="rank rank-4">4</span>
+      <span class="pilot-name p-philippe">Philippe</span>
+      <span class="cat-pts lb-cat-bmw">12</span>
+      <span class="cat-pts lb-cat-aston">10</span>
+      <span class="cat-pts">7</span>
+      <span class="cat-pts">10</span>
+      <span class="total-pts">39</span>
+    </div>
+
+    <!-- Points bars -->
+    <div class="points-bar-wrap" style="margin-top: 1rem; padding-top: 0.5rem; border-top: 1px solid var(--border);">
+      <div class="points-bar-row">
+        <span class="points-bar-name p-manu">Manu</span>
+        <div class="points-bar"><div class="points-bar-fill fill-1" style="width: 100%"></div></div>
+        <span class="points-bar-val">77</span>
+      </div>
+      <div class="points-bar-row">
+        <span class="points-bar-name p-brice">Brice</span>
+        <div class="points-bar"><div class="points-bar-fill fill-2" style="width: 57%"></div></div>
+        <span class="points-bar-val">44</span>
+      </div>
+      <div class="points-bar-row">
+        <span class="points-bar-name p-alain">Alain</span>
+        <div class="points-bar"><div class="points-bar-fill fill-3" style="width: 52%"></div></div>
+        <span class="points-bar-val">40</span>
+      </div>
+      <div class="points-bar-row">
+        <span class="points-bar-name p-philippe">Philippe</span>
+        <div class="points-bar"><div class="points-bar-fill fill-4" style="width: 50.6%"></div></div>
+        <span class="points-bar-val">39</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== RÉSULTATS PAR CATÉGORIE ===== -->
+  <div class="section-title">Résultats par catégorie</div>
+
+  <div class="tabs-wrap">
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="switchTab('bmw', this)">BMW M4 GT3</button>
+      <button class="tab-btn" onclick="switchTab('aston', this)">Aston Martin GT3</button>
+      <button class="tab-btn" onclick="switchTab('porsche', this)">Porsche 911 GT3 R</button>
+      <button class="tab-btn" onclick="switchTab('mclaren', this)">McLaren 720S GT3</button>
+    </div>
+
+    <!-- BMW -->
+    <div id="tab-bmw" class="tab-panel active">
+      <!-- Classement catégorie BMW -->
+      <div class="manche-block" style="margin-top:1.2rem;">
+        <div class="manche-header">
+          <span class="manche-num">Classement BMW</span>
+          <span class="manche-date">2 manches disputées</span>
+        </div>
+        <div style="padding: 0.75rem 1.5rem 1rem;">
+          <div class="points-bar-row"><span class="points-bar-name p-manu">Manu</span><div class="points-bar"><div class="points-bar-fill fill-1" style="width: 100%"></div></div><span class="points-bar-val">24</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-philippe">Philippe</span><div class="points-bar"><div class="points-bar-fill fill-4" style="width: 50%"></div></div><span class="points-bar-val">12</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-brice">Brice</span><div class="points-bar"><div class="points-bar-fill fill-2" style="width: 29.2%"></div></div><span class="points-bar-val">7</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-alain">Alain</span><div class="points-bar"><div class="points-bar-fill fill-3" style="width: 29.2%"></div></div><span class="points-bar-val">7</span></div>
+        </div>
+      </div>
+
+      <!-- Manche 1 BMW -->
+      <div class="manche-block">
+        <div class="manche-header">
+          <span class="manche-num">Manche 1</span>
+          <span class="manche-date">15 avril 2026</span>
+          <div class="manche-badges">
+            <span class="badge badge-pole">🎯 Pole · Manu</span>
+            <span class="badge badge-winner">🏆 Victoire · Manu</span>
+            <span class="badge badge-fl">⚡ Meilleur tour · Manu · 10.627s</span>
+          </div>
+        </div>
+        <div class="sessions-grid">
+          <div class="session-block">
+            <div class="session-label">Qualifications</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right"></th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">10.298s</td><td class="pts-cell"><span class="icon-pole">P</span></td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">10.350s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.657s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">11.389s</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Course — 50 tours</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right">Pts</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">10.627s<span class="icon-fl">FL</span></td><td class="pts-cell">12</td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.915s</td><td class="pts-cell">6</td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">11.302s</td><td class="pts-cell">4</td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">10.886s</td><td class="pts-cell">3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manche 2 BMW -->
+      <div class="manche-block">
+        <div class="manche-header">
+          <span class="manche-num">Manche 2</span>
+          <span class="manche-date">20 mai 2026</span>
+          <div class="manche-badges">
+            <span class="badge badge-pole">🎯 Pole · Manu</span>
+            <span class="badge badge-winner">🏆 Victoire · Manu</span>
+            <span class="badge badge-fl">⚡ Meilleur tour · Manu · 10.890s</span>
+          </div>
+        </div>
+        <div class="sessions-grid">
+          <div class="session-block">
+            <div class="session-label">Qualifications</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right"></th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">11.129s</td><td class="pts-cell"><span class="icon-pole">P</span></td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">11.722s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">12.247s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">12.692s</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Course — 50 tours</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right">Pts</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">10.890s<span class="icon-fl">FL</span></td><td class="pts-cell">12</td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">11.942s</td><td class="pts-cell">6</td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">12.015s</td><td class="pts-cell">4</td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">12.378s</td><td class="pts-cell">3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manches à venir BMW -->
+      <div class="upcoming-block">
+        <div class="upcoming-header"><h3>Manches à venir — BMW M4 GT3</h3></div>
+        <div class="upcoming-list">
+          <div class="upcoming-item"><span class="upcoming-manche">M3</span><span class="upcoming-date">19 juillet 2026</span><span class="status-badge status-confirmed">Confirmée</span></div>
+          <div class="upcoming-item"><span class="upcoming-manche">M4</span><span class="upcoming-date">16 août 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+          <div class="upcoming-item"><span class="upcoming-manche">M5</span><span class="upcoming-date">20 sept. 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+          <div class="upcoming-item"><span class="upcoming-manche">M6</span><span class="upcoming-date">18 oct. 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+          <div class="upcoming-item"><span class="upcoming-manche">M7</span><span class="upcoming-date">22 nov. 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+          <div class="upcoming-item"><span class="upcoming-manche">M8</span><span class="upcoming-date">20 déc. 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASTON -->
+    <div id="tab-aston" class="tab-panel">
+      <div class="manche-block" style="margin-top:1.2rem;">
+        <div class="manche-header">
+          <span class="manche-num">Classement Aston Martin</span>
+          <span class="manche-date">2 manches disputées</span>
+        </div>
+        <div style="padding: 0.75rem 1.5rem 1rem;">
+          <div class="points-bar-row"><span class="points-bar-name p-manu">Manu</span><div class="points-bar"><div class="points-bar-fill fill-1" style="width: 100%"></div></div><span class="points-bar-val">24</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-philippe">Philippe</span><div class="points-bar"><div class="points-bar-fill fill-4" style="width: 41.7%"></div></div><span class="points-bar-val">10</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-brice">Brice</span><div class="points-bar"><div class="points-bar-fill fill-2" style="width: 41.7%"></div></div><span class="points-bar-val">10</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-alain">Alain</span><div class="points-bar"><div class="points-bar-fill fill-3" style="width: 25%"></div></div><span class="points-bar-val">6</span></div>
+        </div>
+      </div>
+
+      <div class="manche-block">
+        <div class="manche-header">
+          <span class="manche-num">Manche 1</span>
+          <span class="manche-date">15 avril 2026</span>
+          <div class="manche-badges">
+            <span class="badge badge-pole">🎯 Pole · Manu</span>
+            <span class="badge badge-winner">🏆 Victoire · Manu</span>
+            <span class="badge badge-fl">⚡ Meilleur tour · Manu · 10.481s</span>
+          </div>
+        </div>
+        <div class="sessions-grid">
+          <div class="session-block">
+            <div class="session-label">Qualifications</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">10.308s</td><td class="pts-cell"><span class="icon-pole">P</span></td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.964s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">11.876s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">17.345s</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Course — 50 tours</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right">Pts</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">10.481s<span class="icon-fl">FL</span></td><td class="pts-cell">12</td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">11.265s</td><td class="pts-cell">6</td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">11.953s</td><td class="pts-cell">4</td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">11.555s</td><td class="pts-cell">3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="manche-block">
+        <div class="manche-header">
+          <span class="manche-num">Manche 2</span>
+          <span class="manche-date">20 mai 2026</span>
+          <div class="manche-badges">
+            <span class="badge badge-pole">🎯 Pole · Manu</span>
+            <span class="badge badge-winner">🏆 Victoire · Manu</span>
+            <span class="badge badge-fl">⚡ Meilleur tour · Manu · 11.354s</span>
+          </div>
+        </div>
+        <div class="sessions-grid">
+          <div class="session-block">
+            <div class="session-label">Qualifications</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">11.126s</td><td class="pts-cell"><span class="icon-pole">P</span></td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">11.467s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">12.312s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">12.436s</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Course — 50 tours</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right">Pts</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">11.354s<span class="icon-fl">FL</span></td><td class="pts-cell">12</td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">11.534s</td><td class="pts-cell">6</td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">12.260s</td><td class="pts-cell">4</td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">12.505s</td><td class="pts-cell">3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PORSCHE -->
+    <div id="tab-porsche" class="tab-panel">
+      <div class="manche-block" style="margin-top:1.2rem;">
+        <div class="manche-header">
+          <span class="manche-num">Classement Porsche</span>
+          <span class="manche-date">2 manches disputées</span>
+        </div>
+        <div style="padding: 0.75rem 1.5rem 1rem;">
+          <div class="points-bar-row"><span class="points-bar-name p-manu">Manu</span><div class="points-bar"><div class="points-bar-fill fill-1" style="width: 100%"></div></div><span class="points-bar-val">16</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-brice">Brice</span><div class="points-bar"><div class="points-bar-fill fill-2" style="width: 87.5%"></div></div><span class="points-bar-val">14</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-alain">Alain</span><div class="points-bar"><div class="points-bar-fill fill-3" style="width: 81.2%"></div></div><span class="points-bar-val">13</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-philippe">Philippe</span><div class="points-bar"><div class="points-bar-fill fill-4" style="width: 43.8%"></div></div><span class="points-bar-val">7</span></div>
+        </div>
+      </div>
+
+      <div class="manche-block">
+        <div class="manche-header">
+          <span class="manche-num">Manche 1</span>
+          <span class="manche-date">15 avril 2026</span>
+          <div class="manche-badges">
+            <span class="badge badge-pole">🎯 Pole · Brice</span>
+            <span class="badge badge-winner">🏆 Victoire · Alain</span>
+            <span class="badge badge-fl">⚡ Meilleur tour · Brice · 9.762s</span>
+          </div>
+        </div>
+        <div class="sessions-grid">
+          <div class="session-block">
+            <div class="session-label">Qualifications</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">9.572s</td><td class="pts-cell"><span class="icon-pole">P</span></td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">10.704s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">10.809s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.851s</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Course — 50 tours</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right">Pts</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">10.635s</td><td class="pts-cell">10</td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">9.762s<span class="icon-fl">FL</span></td><td class="pts-cell">7</td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">10.687s</td><td class="pts-cell">4</td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">11.507s</td><td class="pts-cell">3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="manche-block">
+        <div class="manche-header">
+          <span class="manche-num">Manche 2</span>
+          <span class="manche-date">20 mai 2026</span>
+          <div class="manche-badges">
+            <span class="badge badge-pole">🎯 Pole · Manu</span>
+            <span class="badge badge-winner">🏆 Victoire · Manu</span>
+            <span class="badge badge-fl">⚡ Meilleur tour · Manu · 10.133s</span>
+          </div>
+        </div>
+        <div class="sessions-grid">
+          <div class="session-block">
+            <div class="session-label">Qualifications</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">10.017s</td><td class="pts-cell"><span class="icon-pole">P</span></td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">10.484s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.787s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">11.571s</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Course — 50 tours</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right">Pts</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">10.133s<span class="icon-fl">FL</span></td><td class="pts-cell">12</td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">10.736s</td><td class="pts-cell">6</td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.819s</td><td class="pts-cell">4</td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">11.546s</td><td class="pts-cell">3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- McLAREN -->
+    <div id="tab-mclaren" class="tab-panel">
+      <div class="manche-block" style="margin-top:1.2rem;">
+        <div class="manche-header">
+          <span class="manche-num">Classement McLaren</span>
+          <span class="manche-date">2 manches disputées</span>
+        </div>
+        <div style="padding: 0.75rem 1.5rem 1rem;">
+          <div class="points-bar-row"><span class="points-bar-name p-alain">Alain</span><div class="points-bar"><div class="points-bar-fill fill-3" style="width: 100%"></div></div><span class="points-bar-val">14</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-brice">Brice</span><div class="points-bar"><div class="points-bar-fill fill-2" style="width: 92.9%"></div></div><span class="points-bar-val">13</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-manu">Manu</span><div class="points-bar"><div class="points-bar-fill fill-1" style="width: 92.9%"></div></div><span class="points-bar-val">13</span></div>
+          <div class="points-bar-row"><span class="points-bar-name p-philippe">Philippe</span><div class="points-bar"><div class="points-bar-fill fill-4" style="width: 71.4%"></div></div><span class="points-bar-val">10</span></div>
+        </div>
+      </div>
+
+      <div class="manche-block">
+        <div class="manche-header">
+          <span class="manche-num">Manche 1</span>
+          <span class="manche-date">15 avril 2026</span>
+          <div class="manche-badges">
+            <span class="badge badge-pole">🎯 Pole · Philippe</span>
+            <span class="badge badge-winner">🏆 Victoire · Alain</span>
+            <span class="badge badge-fl">⚡ Meilleur tour · Manu · 9.962s</span>
+          </div>
+        </div>
+        <div class="sessions-grid">
+          <div class="session-block">
+            <div class="session-label">Qualifications</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.537s</td><td class="pts-cell"><span class="icon-pole">P</span></td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">11.713s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">12.878s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">13.253s</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Course — 50 tours</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right">Pts</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">11.240s</td><td class="pts-cell">10</td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.686s</td><td class="pts-cell">6</td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">9.962s<span class="icon-fl">FL</span></td><td class="pts-cell">5</td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">11.226s</td><td class="pts-cell">3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="manche-block">
+        <div class="manche-header">
+          <span class="manche-num">Manche 2</span>
+          <span class="manche-date">20 mai 2026</span>
+          <div class="manche-badges">
+            <span class="badge badge-pole">🎯 Pole · Manu</span>
+            <span class="badge badge-winner">🏆 Victoire · Brice</span>
+            <span class="badge badge-fl">⚡ Meilleur tour · Manu · 9.860s</span>
+          </div>
+        </div>
+        <div class="sessions-grid">
+          <div class="session-block">
+            <div class="session-label">Qualifications</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">9.727s</td><td class="pts-cell"><span class="icon-pole">P</span></td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">10.127s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.396s</td><td></td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">10.640s</td><td></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="session-block">
+            <div class="session-label">Course — 50 tours</div>
+            <table class="session-table">
+              <thead><tr><th>Pos</th><th>Pilote</th><th>Meilleur tour</th><th style="text-align:right">Pts</th></tr></thead>
+              <tbody>
+                <tr><td><span class="pos-badge pos-1">1</span></td><td class="pilot-cell p-brice">Brice</td><td class="time-cell">10.295s</td><td class="pts-cell">10</td></tr>
+                <tr><td><span class="pos-badge pos-2">2</span></td><td class="pilot-cell p-manu">Manu</td><td class="time-cell">9.860s<span class="icon-fl">FL</span></td><td class="pts-cell">8</td></tr>
+                <tr><td><span class="pos-badge pos-3">3</span></td><td class="pilot-cell p-alain">Alain</td><td class="time-cell">10.273s</td><td class="pts-cell">4</td></tr>
+                <tr><td><span class="pos-badge pos-4">4</span></td><td class="pilot-cell p-philippe">Philippe</td><td class="time-cell">10.333s</td><td class="pts-cell">3</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CALENDRIER & RÈGLEMENT ===== -->
+  <div class="section-title">Calendrier & Règlement</div>
+
+  <div class="reglement-grid">
+    <div class="reg-card">
+      <h4>Barème des points</h4>
+      <div class="score-row"><span class="score-label">🥇 1ère place</span><span class="score-val">10 pts</span></div>
+      <div class="score-row"><span class="score-label">🥈 2ème place</span><span class="score-val">6 pts</span></div>
+      <div class="score-row"><span class="score-label">🥉 3ème place</span><span class="score-val">4 pts</span></div>
+      <div class="score-row"><span class="score-label">4ème place</span><span class="score-val">3 pts</span></div>
+      <div class="score-row"><span class="score-label">5ème place</span><span class="score-val">2 pts</span></div>
+      <div class="score-row"><span class="score-label">6ème place</span><span class="score-val">1 pt</span></div>
+      <div class="score-row"><span class="score-label">🎯 Bonus pole position</span><span class="score-val">+1 pt</span></div>
+      <div class="score-row"><span class="score-label">⚡ Bonus meilleur tour</span><span class="score-val">+1 pt</span></div>
+    </div>
+
+    <div class="reg-card">
+      <h4>Catégories GT3</h4>
+      <div style="margin-bottom: 0.8rem;">
+        <span class="cat-chip"><span class="cat-dot" style="background:var(--gold)"></span>BMW M4 GT3</span>
+        <span class="cat-chip"><span class="cat-dot" style="background:var(--green)"></span>Aston Martin GT3</span>
+        <span class="cat-chip"><span class="cat-dot" style="background:var(--red)"></span>Porsche 911 GT3 R</span>
+        <span class="cat-chip"><span class="cat-dot" style="background:var(--blue)"></span>McLaren 720S GT3</span>
+      </div>
+      <h4 style="margin-top:1rem">Format saison</h4>
+      <div class="score-row"><span class="score-label">Manches par catégorie</span><span class="score-val">8</span></div>
+      <div class="score-row"><span class="score-label">Total courses saison</span><span class="score-val">32</span></div>
+      <div class="score-row"><span class="score-label">Pilotes</span><span class="score-val">4</span></div>
+      <div class="score-row"><span class="score-label">Manches disputées</span><span class="score-val">2/8</span></div>
+    </div>
+  </div>
+
+  <!-- Calendrier général -->
+  <div class="upcoming-block" style="margin-bottom: 2.5rem;">
+    <div class="upcoming-header"><h3>Calendrier général 2026</h3></div>
+    <div class="upcoming-list">
+      <div class="upcoming-item"><span class="upcoming-manche">M1</span><span class="upcoming-date">15 avril 2026</span><span class="status-badge status-done">Terminée</span></div>
+      <div class="upcoming-item"><span class="upcoming-manche">M2</span><span class="upcoming-date">20 mai 2026</span><span class="status-badge status-done">Terminée</span></div>
+      <div class="upcoming-item"><span class="upcoming-manche">M3</span><span class="upcoming-date">19 juillet 2026</span><span class="status-badge status-confirmed">Confirmée</span></div>
+      <div class="upcoming-item"><span class="upcoming-manche">M4</span><span class="upcoming-date">16 août 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+      <div class="upcoming-item"><span class="upcoming-manche">M5</span><span class="upcoming-date">20 sept. 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+      <div class="upcoming-item"><span class="upcoming-manche">M6</span><span class="upcoming-date">18 oct. 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+      <div class="upcoming-item"><span class="upcoming-manche">M7</span><span class="upcoming-date">22 nov. 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+      <div class="upcoming-item"><span class="upcoming-manche">M8</span><span class="upcoming-date">20 déc. 2026</span><span class="status-badge status-estimated">Estimée</span></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Cottage Racing Championship 2026 · Carrera Digital 132 · 4 pilotes · 4 catégories GT3 · Ze SlotCar Studio
+</footer>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
