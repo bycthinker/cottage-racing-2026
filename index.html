@@ -11,6 +11,7 @@
 <meta name="theme-color" content="#0A0A0F">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="daily_content.js"></script>
 <style>
   :root {
     --bg: #0A0A0F; --surface: #13131C; --surface2: #1C1C2A; --border: #2A2A3E;
@@ -157,6 +158,24 @@
   .p-manu{color:var(--gold)} .p-brice{color:var(--blue)} .p-alain{color:var(--green)} .p-philippe{color:var(--red)}
 
   .empty-state { padding:2rem 1.5rem; text-align:center; color:var(--muted); font-size:.85rem; }
+
+  /* DAILY CONTENT BLOCK */
+  .daily-block { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:2.5rem; }
+  @media(max-width:700px){ .daily-block{grid-template-columns:1fr;} }
+  .daily-card { background:var(--surface); border:1px solid var(--border); border-radius:4px; overflow:hidden; }
+  .daily-card-header { padding:.8rem 1.5rem; display:flex; align-items:center; gap:.6rem; border-bottom:1px solid var(--border); }
+  .daily-card.anecdote .daily-card-header { background:#1A1408; border-bottom-color:#3A2E12; }
+  .daily-card.citation .daily-card-header { background:#0D1A2A; border-bottom-color:#1A2E42; }
+  .daily-card-title { font-family:'Rajdhani',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
+  .daily-card.anecdote .daily-card-title { color:var(--gold); }
+  .daily-card.citation .daily-card-title { color:var(--blue); }
+  .daily-card-body { padding:1.3rem 1.5rem; }
+  .daily-cat-chip { display:inline-block; font-family:'Rajdhani',sans-serif; font-size:.62rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:2px 8px; border-radius:2px; background:rgba(255,183,3,.12); color:var(--gold); border:1px solid rgba(255,183,3,.25); margin-bottom:.7rem; }
+  .daily-anecdote-titre { font-family:'Rajdhani',sans-serif; font-size:1.05rem; font-weight:700; color:var(--white); margin-bottom:.5rem; line-height:1.3; }
+  .daily-anecdote-text { font-size:.88rem; color:var(--text); line-height:1.55; }
+  .daily-citation-text { font-size:1rem; color:var(--text); line-height:1.55; font-style:italic; margin-bottom:.8rem; }
+  .daily-citation-author { font-family:'Rajdhani',sans-serif; font-size:.85rem; font-weight:600; color:var(--blue); }
+  .daily-citation-theme { display:inline-block; font-family:'Rajdhani',sans-serif; font-size:.6rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin-top:.6rem; padding-top:.6rem; border-top:1px solid rgba(42,42,62,.5); }
 </style>
 </head>
 <body>
@@ -180,6 +199,8 @@
 </header>
 
 <main>
+
+  <div id="daily-content-block"></div>
 
   <div class="section-title">Classement Général</div>
   <div class="champ-block">
@@ -303,7 +324,7 @@ const CALENDAR = [
    "fl" = true sur le pilote qui a fait le meilleur tour en course. */
 const RACES = {
 
-  bmw: [
+bmw: [
     {
       manche: 1, date: '15 avril 2026',
       qualifs: [
@@ -506,12 +527,20 @@ function pilotInfo(name) {
 }
 function pClass(name) { const p = pilotInfo(name); return p.id ? `p-${p.id}` : ''; }
 
-// Calcule les points d'une manche pour une catégorie
-function computeManchePoints(race) {
-  const polePilote = race.qualifs[0]?.pilote;
-  const flPilote = race.course.find(c => c.fl)?.pilote;
+// Trie qualifs et course par temps croissant (le plus rapide en P1), peu importe
+// l'ordre de saisie dans RACES. Renvoie une COPIE de la manche, jamais modifiée en place.
+function sortRace(race) {
+  const qualifs = (race.qualifs || []).slice().sort((a,b) => a.temps - b.temps);
+  const course = (race.course || []).slice().sort((a,b) => a.temps - b.temps);
+  return { ...race, qualifs, course };
+}
+
+// Calcule les points d'une manche pour une catégorie (race doit déjà être triée)
+function computeManchePoints(sortedRace) {
+  const polePilote = sortedRace.qualifs[0]?.pilote;
+  const flPilote = sortedRace.course.find(c => c.fl)?.pilote;
   const pts = {};
-  race.course.forEach((c, idx) => {
+  sortedRace.course.forEach((c, idx) => {
     const pos = idx + 1;
     let p = POINTS_BASE[pos] || 0;
     if (c.pilote === polePilote) p += 1;
@@ -527,7 +556,7 @@ function categoryStandings(catId) {
   const totals = {};
   PILOTS.forEach(p => totals[p.name] = 0);
   races.forEach(race => {
-    const pts = computeManchePoints(race);
+    const pts = computeManchePoints(sortRace(race));
     Object.keys(pts).forEach(name => { totals[name] = (totals[name]||0) + pts[name]; });
   });
   const arr = PILOTS.map(p => ({ name:p.name, total: totals[p.name]||0 }));
@@ -542,7 +571,7 @@ function generalStandings() {
 
   CATEGORIES.forEach(cat => {
     (RACES[cat.id]||[]).forEach(race => {
-      const pts = computeManchePoints(race);
+      const pts = computeManchePoints(sortRace(race));
       Object.keys(pts).forEach(name => { perCat[cat.id][name] = (perCat[cat.id][name]||0) + pts[name]; });
     });
   });
@@ -691,7 +720,8 @@ function renderSessionTable(rows, type) {
   return `<table class="session-table">${header}<tbody>${bodyRows}</tbody></table>`;
 }
 
-function renderMancheBlock(catId, race, isOpen) {
+function renderMancheBlock(catId, rawRace, isOpen) {
+  const race = sortRace(rawRace);
   const polePilote = race.qualifs[0]?.pilote || '?';
   const vainqueur = race.course[0]?.pilote || '?';
   const flEntry = race.course.find(c => c.fl);
@@ -778,7 +808,41 @@ function toggleManche(toggleEl) {
   toggleEl.closest('.manche-block').classList.toggle('open');
 }
 
+function renderDailyContent() {
+  const container = document.getElementById('daily-content-block');
+  if (typeof DAILY_CONTENT === 'undefined') { container.innerHTML = ''; return; }
+
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const key = `${dd}-${mm}`;
+
+  const entry = DAILY_CONTENT[key];
+  if (!entry) { container.innerHTML = ''; return; }
+
+  container.innerHTML = `
+    <div class="daily-block">
+      <div class="daily-card anecdote">
+        <div class="daily-card-header"><span>🏁</span><span class="daily-card-title">Anecdote du jour</span></div>
+        <div class="daily-card-body">
+          <span class="daily-cat-chip">${entry.a_cat}</span>
+          <div class="daily-anecdote-titre">${entry.a_titre}</div>
+          <div class="daily-anecdote-text">${entry.a_texte}</div>
+        </div>
+      </div>
+      <div class="daily-card citation">
+        <div class="daily-card-header"><span>💬</span><span class="daily-card-title">Citation du jour</span></div>
+        <div class="daily-card-body">
+          <div class="daily-citation-text">"${entry.c_texte}"</div>
+          <div class="daily-citation-author">— ${entry.c_auteur}</div>
+          <div class="daily-citation-theme">Thème : ${entry.c_theme}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
 renderAll();
+renderDailyContent();
 </script>
 
 </body>
