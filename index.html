@@ -319,9 +319,12 @@ const CALENDAR = [
 ];
 
 /* RÉSULTATS BRUTS PAR CATÉGORIE
-   Chaque manche = { manche, date, qualifs:[{pilote,temps}...], course:[{pilote,temps,tours,fl}...] }
-   qualifs et course doivent être triés par position (P1 en premier).
-   "fl" = true sur le pilote qui a fait le meilleur tour en course. */
+   Chaque manche = { manche, date, qualifs:[{pilote,temps}], course:[{pilote,temps,tours,position,fl}] }
+   - qualifs : peu importe l'ordre de saisie, le site trie par temps (le plus rapide = pole).
+   - course  : le champ "position" (1,2,3,4) détermine le classement réel (vainqueur,
+     2e, etc.), car le vainqueur est celui qui a fait le plus de tours / franchi la
+     ligne en premier — pas forcément celui qui a le meilleur tour au chrono.
+   - "fl": true sur le pilote qui a fait le meilleur tour en course (bonus point, indépendant de sa position). */
 const RACES = {
 
 bmw: [
@@ -334,10 +337,10 @@ bmw: [
         { pilote:'Alain', temps:11.389 }
       ],
       course: [
-        { pilote:'Manu', temps:10.627, tours:50, fl:true },
-        { pilote:'Philippe', temps:10.915, tours:50 },
-        { pilote:'Alain', temps:11.302, tours:50 },
-        { pilote:'Brice', temps:10.886, tours:50 }
+        { pilote:'Manu', temps:10.627, position:1, tours:50, fl:true },
+        { pilote:'Philippe', temps:10.915, position:2, tours:50 },
+        { pilote:'Alain', temps:11.302, position:3, tours:50 },
+        { pilote:'Brice', temps:10.886, position:4, tours:50 }
       ]
     },
     {
@@ -349,10 +352,10 @@ bmw: [
         { pilote:'Alain', temps:12.692 }
       ],
       course: [
-        { pilote:'Manu', temps:10.890, tours:50, fl:true },
-        { pilote:'Philippe', temps:11.942, tours:50 },
-        { pilote:'Brice', temps:12.015, tours:50 },
-        { pilote:'Alain', temps:12.378, tours:50 }
+        { pilote:'Manu', temps:10.890, position:1, tours:50, fl:true },
+        { pilote:'Philippe', temps:11.942, position:2, tours:50 },
+        { pilote:'Brice', temps:12.015, position:3, tours:50 },
+        { pilote:'Alain', temps:12.378, position:4, tours:50 }
       ]
     },
      {
@@ -364,10 +367,10 @@ bmw: [
         { pilote:'Philippe', temps:10.927 }
       ],
       course: [
-        { pilote:'Manu', temps:11.014, tours:48},
-        { pilote:'Brice', temps:10.802, tours:50, fl:true },
-        { pilote:'Alain', temps:11.469, tours:45 },
-        { pilote:'Philippe', temps:10.469, tours:50 }
+        { pilote:'Manu', temps:11.014, position:3, tours:48},
+        { pilote:'Brice', temps:10.802, position:1, tours:50, fl:true },
+        { pilote:'Alain', temps:11.469, position:4, tours:45 },
+        { pilote:'Philippe', temps:10.469, position:2, tours:50 }
       ]
     }
   ],
@@ -382,10 +385,10 @@ bmw: [
         { pilote:'Brice', temps:17.345 }
       ],
       course: [
-        { pilote:'Manu', temps:10.481, tours:50, fl:true },
-        { pilote:'Philippe', temps:11.265, tours:50 },
-        { pilote:'Brice', temps:11.953, tours:50 },
-        { pilote:'Alain', temps:11.555, tours:50 }
+        { pilote:'Manu', temps:10.481, position:1, tours:50, fl:true },
+        { pilote:'Philippe', temps:11.265, position:2, tours:50 },
+        { pilote:'Brice', temps:11.953, position:3, tours:50 },
+        { pilote:'Alain', temps:11.555, position:4, tours:50 }
       ]
     },
     {
@@ -397,10 +400,10 @@ bmw: [
         { pilote:'Alain', temps:12.436 }
       ],
       course: [
-        { pilote:'Manu', temps:11.354, tours:50, fl:true },
-        { pilote:'Brice', temps:11.534, tours:50 },
-        { pilote:'Philippe', temps:12.260, tours:50 },
-        { pilote:'Alain', temps:12.505, tours:50 }
+        { pilote:'Manu', temps:11.354, position:1, tours:50, fl:true },
+        { pilote:'Brice', temps:11.534, position:2, tours:50 },
+        { pilote:'Philippe', temps:12.260, position:3, tours:50 },
+        { pilote:'Alain', temps:12.505, position:4, tours:50 }
       ]
     },
     {
@@ -412,10 +415,10 @@ bmw: [
         { pilote:'Philippe', temps:11.054 }
       ],
       course: [
-        { pilote:'Manu', temps:11.072, tours:49},
-        { pilote:'Brice', temps:10.876, tours:50, fl:true },
-        { pilote:'Alain', temps:12.578, tours:44 },
-        { pilote:'Philippe', temps:11.297, tours:50 }
+        { pilote:'Manu', temps:11.072, position:3, tours:49},
+        { pilote:'Brice', temps:10.876, position:1, tours:50, fl:true },
+        { pilote:'Alain', temps:12.578, position:4, tours:44 },
+        { pilote:'Philippe', temps:11.297, position:2, tours:50 }
       ]
     }
   ],
@@ -430,10 +433,10 @@ bmw: [
         { pilote:'Philippe', temps:10.851 }
       ],
       course: [
-        { pilote:'Alain', temps:10.635, tours:50 },
-        { pilote:'Brice', temps:9.762, tours:50, fl:true },
-        { pilote:'Manu', temps:10.687, tours:50 },
-        { pilote:'Philippe', temps:11.507, tours:50 }
+        { pilote:'Alain', temps:10.635, position:1, tours:50 },
+        { pilote:'Brice', temps:9.762, position:2, tours:50, fl:true },
+        { pilote:'Manu', temps:10.687, position:3, tours:50 },
+        { pilote:'Philippe', temps:11.507, position:4, tours:50 }
       ]
     },
     {
@@ -445,10 +448,10 @@ bmw: [
         { pilote:'Alain', temps:11.571 }
       ],
       course: [
-        { pilote:'Manu', temps:10.133, tours:50, fl:true },
-        { pilote:'Brice', temps:10.736, tours:50 },
-        { pilote:'Philippe', temps:10.819, tours:50 },
-        { pilote:'Alain', temps:11.546, tours:50 }
+        { pilote:'Manu', temps:10.133, position:1, tours:50, fl:true },
+        { pilote:'Brice', temps:10.736, position:2, tours:50 },
+        { pilote:'Philippe', temps:10.819, position:3, tours:50 },
+        { pilote:'Alain', temps:11.546, position:4, tours:50 }
       ]
     },
     {
@@ -460,10 +463,10 @@ bmw: [
         { pilote:'Philippe', temps:10.693 }
       ],
       course: [
-        { pilote:'Manu', temps:10.281, tours:50},
-        { pilote:'Brice', temps:10.272, tours:50, fl:true },
-        { pilote:'Alain', temps:10.526, tours:48 },
-        { pilote:'Philippe', temps:10.917, tours:49 }
+        { pilote:'Manu', temps:10.281, position:2, tours:50},
+        { pilote:'Brice', temps:10.272, position:1, tours:50, fl:true },
+        { pilote:'Alain', temps:10.526, position:4, tours:48 },
+        { pilote:'Philippe', temps:10.917, position:3, tours:49 }
       ]
     } 
   ],
@@ -478,10 +481,10 @@ bmw: [
         { pilote:'Brice', temps:13.253 }
       ],
       course: [
-        { pilote:'Alain', temps:11.240, tours:50 },
-        { pilote:'Philippe', temps:10.686, tours:50 },
-        { pilote:'Manu', temps:9.962, tours:50, fl:true },
-        { pilote:'Brice', temps:11.226, tours:50 }
+        { pilote:'Alain', temps:11.240, position:1, tours:50 },
+        { pilote:'Philippe', temps:10.686, position:2, tours:50 },
+        { pilote:'Manu', temps:9.962, position:3, tours:50, fl:true },
+        { pilote:'Brice', temps:11.226, position:4, tours:50 }
       ]
     },
     {
@@ -493,10 +496,10 @@ bmw: [
         { pilote:'Alain', temps:10.640 }
       ],
       course: [
-        { pilote:'Brice', temps:10.295, tours:50 },
-        { pilote:'Manu', temps:9.860, tours:50, fl:true },
-        { pilote:'Alain', temps:10.273, tours:50 },
-        { pilote:'Philippe', temps:10.333, tours:50 }
+        { pilote:'Brice', temps:10.295, position:1, tours:50 },
+        { pilote:'Manu', temps:9.860, position:2, tours:50, fl:true },
+        { pilote:'Alain', temps:10.273, position:3, tours:50 },
+        { pilote:'Philippe', temps:10.333, position:4, tours:50 }
       ]
     },
     {
@@ -508,10 +511,10 @@ bmw: [
         { pilote:'Philippe', temps:10.358 }
       ],
       course: [
-        { pilote:'Manu', temps:9.993, tours:49, fl:true },
-        { pilote:'Brice', temps:10.184, tours:50 },
-        { pilote:'Alain', temps:10.607, tours:47 },
-        { pilote:'Philippe', temps:10.701, tours:49 }
+        { pilote:'Manu', temps:9.993, position:2, tours:49, fl:true },
+        { pilote:'Brice', temps:10.184, position:1, tours:50 },
+        { pilote:'Alain', temps:10.607, position:4, tours:47 },
+        { pilote:'Philippe', temps:10.701, position:3, tours:49 }
       ]
     } 
   ]
@@ -527,11 +530,21 @@ function pilotInfo(name) {
 }
 function pClass(name) { const p = pilotInfo(name); return p.id ? `p-${p.id}` : ''; }
 
-// Trie qualifs et course par temps croissant (le plus rapide en P1), peu importe
-// l'ordre de saisie dans RACES. Renvoie une COPIE de la manche, jamais modifiée en place.
+// Trie qualifs par temps croissant (le plus rapide = pole), et trie la course
+// par la position réelle d'arrivée (champ "position": 1,2,3,4) car le vainqueur
+// est celui qui a fait le plus de tours / franchi la ligne en premier — pas
+// forcément celui qui a le meilleur tour au chrono. Si "position" est absent
+// (anciennes manches), on retombe sur un tri par temps pour rester compatible.
+// Renvoie une COPIE de la manche, jamais modifiée en place.
 function sortRace(race) {
   const qualifs = (race.qualifs || []).slice().sort((a,b) => a.temps - b.temps);
-  const course = (race.course || []).slice().sort((a,b) => a.temps - b.temps);
+
+  const hasPositions = (race.course || []).every(c => typeof c.position === 'number');
+  const course = (race.course || []).slice().sort((a,b) => {
+    if (hasPositions) return a.position - b.position;
+    return a.temps - b.temps; // fallback pour anciennes données sans "position"
+  });
+
   return { ...race, qualifs, course };
 }
 
