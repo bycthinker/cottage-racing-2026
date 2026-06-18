@@ -179,24 +179,28 @@
   .pilot-card-banner {
     height:5px;
   }
-  .pilot-card-top { display:flex; gap:1.2rem; padding:1.3rem 1.3rem 1rem; align-items:flex-start; }
   .pilot-photo-wrap {
-    width:96px; height:96px; border-radius:50%; flex-shrink:0; overflow:hidden;
-    border:3px solid var(--border); background:var(--surface2);
+    width:100%; aspect-ratio:4/3; overflow:hidden;
+    background:var(--surface2);
     display:flex; align-items:center; justify-content:center;
+    border-bottom:1px solid var(--border);
   }
-  .pilot-photo-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
-  .pilot-photo-placeholder { font-family:'Rajdhani',sans-serif; font-size:1.8rem; font-weight:700; color:var(--muted); }
-  .pilot-id-block { flex:1; min-width:0; }
+  .pilot-photo-wrap img { width:100%; height:100%; object-fit:cover; object-position:top center; display:block; }
+  .pilot-photo-placeholder {
+    font-family:'Rajdhani',sans-serif; font-size:3.2rem; font-weight:700; color:var(--muted);
+    width:96px; height:96px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    border:3px solid var(--border);
+  }
+  .pilot-id-block { padding:1.2rem 1.3rem 0; }
   .pilot-name-row { display:flex; align-items:baseline; gap:.5rem; flex-wrap:wrap; margin-bottom:.3rem; }
   .pilot-card-name { font-family:'Rajdhani',sans-serif; font-size:1.4rem; font-weight:700; color:var(--white); }
   .pilot-card-number { font-family:'Rajdhani',sans-serif; font-size:1.1rem; font-weight:700; }
   .pilot-flag-nat { font-size:.78rem; color:var(--muted); display:flex; align-items:center; gap:.4rem; }
   .pilot-card-quote {
     font-size:.85rem; font-style:italic; color:var(--text); line-height:1.5;
-    margin-top:.6rem; padding-left:.7rem; border-left:2px solid var(--border);
+    margin-top:.7rem; padding-left:.7rem; border-left:2px solid var(--border);
   }
-  .pilot-values-row { display:flex; flex-wrap:wrap; gap:6px; padding:0 1.3rem 1rem; }
+  .pilot-values-row { display:flex; flex-wrap:wrap; gap:6px; padding:.9rem 1.3rem 1rem; }
   .pilot-value-chip {
     font-family:'Rajdhani',sans-serif; font-size:.62rem; font-weight:700; letter-spacing:.08em;
     text-transform:uppercase; padding:4px 9px; border-radius:3px; background:var(--surface2);
@@ -1018,9 +1022,9 @@ function switchMainSection(id, btn) {
   btn.classList.add('active');
 }
 
-function renderPilotPhoto(photo, initiale) {
+function renderPilotPhoto(photo, initiale, couleur) {
   if (photo) return `<img src="${photo}" alt="${initiale}">`;
-  return `<span class="pilot-photo-placeholder">${initiale}</span>`;
+  return `<span class="pilot-photo-placeholder" style="border-color:${couleur}">${initiale}</span>`;
 }
 
 function renderPilots() {
@@ -1042,18 +1046,16 @@ function renderPilots() {
     return `
       <div class="pilot-card">
         <div class="pilot-card-banner" style="background:${p.couleur}"></div>
-        <div class="pilot-card-top">
-          <div class="pilot-photo-wrap" style="border-color:${p.couleur}">
-            ${renderPilotPhoto(p.photo, initiale)}
+        <div class="pilot-photo-wrap" style="${p.photo ? '' : `background:linear-gradient(135deg, var(--surface2), var(--surface))`}">
+          ${renderPilotPhoto(p.photo, initiale, p.couleur)}
+        </div>
+        <div class="pilot-id-block">
+          <div class="pilot-name-row">
+            <span class="pilot-card-name">${p.nom}</span>
+            <span class="pilot-card-number" style="color:${p.couleur}">#${p.numero}</span>
           </div>
-          <div class="pilot-id-block">
-            <div class="pilot-name-row">
-              <span class="pilot-card-name">${p.nom}</span>
-              <span class="pilot-card-number" style="color:${p.couleur}">#${p.numero}</span>
-            </div>
-            <div class="pilot-flag-nat">${p.nationalite} · GT3</div>
-            ${quoteHTML}
-          </div>
+          <div class="pilot-flag-nat">${p.nationalite} · GT3</div>
+          ${quoteHTML}
         </div>
         <div class="pilot-values-row">${valuesHTML}</div>
         <div class="pilot-bio-section">
