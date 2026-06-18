@@ -159,6 +159,78 @@
 
   .empty-state { padding:2rem 1.5rem; text-align:center; color:var(--muted); font-size:.85rem; }
 
+  /* MAIN SECTION NAV (Classement / Pilotes / Voitures) */
+  .main-nav { display:flex; gap:.6rem; margin-bottom:2rem; flex-wrap:wrap; }
+  .main-nav-btn {
+    font-family:'Rajdhani',sans-serif; font-size:.85rem; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; padding:.65rem 1.3rem; border-radius:4px; cursor:pointer;
+    background:var(--surface); border:1px solid var(--border); color:var(--muted);
+    transition:all .15s; display:flex; align-items:center; gap:.5rem;
+  }
+  .main-nav-btn:hover { color:var(--text); border-color:#3A3A52; }
+  .main-nav-btn.active { background:var(--red); color:#fff; border-color:var(--red); }
+  .main-section { display:none; }
+  .main-section.active { display:block; }
+
+  /* PILOT CARDS */
+  .pilots-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; margin-bottom:2.5rem; }
+  @media(max-width:800px){ .pilots-grid{grid-template-columns:1fr;} }
+  .pilot-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+  .pilot-card-banner {
+    height:5px;
+  }
+  .pilot-card-top { display:flex; gap:1.2rem; padding:1.3rem 1.3rem 1rem; align-items:flex-start; }
+  .pilot-photo-wrap {
+    width:96px; height:96px; border-radius:50%; flex-shrink:0; overflow:hidden;
+    border:3px solid var(--border); background:var(--surface2);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .pilot-photo-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+  .pilot-photo-placeholder { font-family:'Rajdhani',sans-serif; font-size:1.8rem; font-weight:700; color:var(--muted); }
+  .pilot-id-block { flex:1; min-width:0; }
+  .pilot-name-row { display:flex; align-items:baseline; gap:.5rem; flex-wrap:wrap; margin-bottom:.3rem; }
+  .pilot-card-name { font-family:'Rajdhani',sans-serif; font-size:1.4rem; font-weight:700; color:var(--white); }
+  .pilot-card-number { font-family:'Rajdhani',sans-serif; font-size:1.1rem; font-weight:700; }
+  .pilot-flag-nat { font-size:.78rem; color:var(--muted); display:flex; align-items:center; gap:.4rem; }
+  .pilot-card-quote {
+    font-size:.85rem; font-style:italic; color:var(--text); line-height:1.5;
+    margin-top:.6rem; padding-left:.7rem; border-left:2px solid var(--border);
+  }
+  .pilot-values-row { display:flex; flex-wrap:wrap; gap:6px; padding:0 1.3rem 1rem; }
+  .pilot-value-chip {
+    font-family:'Rajdhani',sans-serif; font-size:.62rem; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; padding:4px 9px; border-radius:3px; background:var(--surface2);
+    border:1px solid var(--border); color:var(--muted);
+  }
+  .pilot-bio-section { padding:1rem 1.3rem 1.3rem; border-top:1px solid var(--border); }
+  .pilot-bio-label { font-size:.6rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin-bottom:.6rem; }
+  .pilot-bio-row { display:flex; gap:.6rem; margin-bottom:.5rem; font-size:.85rem; line-height:1.5; }
+  .pilot-bio-row:last-child { margin-bottom:0; }
+  .pilot-bio-icon { flex-shrink:0; width:1.1rem; text-align:center; }
+  .pilot-bio-text strong { color:var(--text); font-weight:600; }
+  .pilot-bio-text { color:var(--muted); }
+
+  /* CAR CARDS */
+  .cars-grid { display:grid; grid-template-columns:1fr; gap:1.5rem; margin-bottom:2.5rem; }
+  .car-card { background:var(--surface); border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+  .car-card-header { padding:1rem 1.5rem; display:flex; align-items:center; gap:.8rem; border-bottom:1px solid var(--border); }
+  .car-card-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .car-card-name { font-family:'Rajdhani',sans-serif; font-size:1.15rem; font-weight:700; color:var(--white); letter-spacing:.03em; }
+  .car-card-pilot-tag { margin-left:auto; font-family:'Rajdhani',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); }
+  .car-card-body { display:grid; grid-template-columns:280px 1fr; gap:0; }
+  @media(max-width:700px){ .car-card-body{grid-template-columns:1fr;} }
+  .car-photo-wrap { background:var(--surface2); display:flex; align-items:center; justify-content:center; min-height:180px; overflow:hidden; }
+  .car-photo-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+  .car-photo-placeholder { font-family:'Rajdhani',sans-serif; font-size:.75rem; color:var(--muted); text-align:center; padding:2rem; letter-spacing:.1em; text-transform:uppercase; }
+  .car-specs { padding:1.2rem 1.5rem; }
+  .car-specs-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.6rem 1.2rem; margin-bottom:1rem; }
+  @media(max-width:500px){ .car-specs-grid{grid-template-columns:1fr;} }
+  .car-spec-item { display:flex; flex-direction:column; gap:1px; }
+  .car-spec-label { font-size:.58rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+  .car-spec-val { font-family:'Rajdhani',sans-serif; font-size:.98rem; font-weight:700; color:var(--text); }
+  .car-desc { font-size:.83rem; color:var(--muted); line-height:1.55; padding-top:.8rem; border-top:1px solid rgba(42,42,62,.5); }
+  .car-desc strong { color:var(--text); font-weight:600; }
+
   /* DAILY CONTENT BLOCK */
   .daily-block { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:2.5rem; }
   @media(max-width:700px){ .daily-block{grid-template-columns:1fr;} }
@@ -201,6 +273,15 @@
 <main>
 
   <div id="daily-content-block"></div>
+
+  <div class="main-nav">
+    <button class="main-nav-btn active" onclick="switchMainSection('classement', this)">🏆 Classement</button>
+    <button class="main-nav-btn" onclick="switchMainSection('pilotes', this)">👤 Pilotes</button>
+    <button class="main-nav-btn" onclick="switchMainSection('voitures', this)">🏎️ Voitures</button>
+  </div>
+
+  <!-- ===================== SECTION CLASSEMENT ===================== -->
+  <div id="section-classement" class="main-section active">
 
   <div class="section-title">Classement Général</div>
   <div class="champ-block">
@@ -275,6 +356,23 @@
     <div class="upcoming-list" id="calendrier-list"></div>
   </div>
 
+  </div>
+  <!-- ===================== FIN SECTION CLASSEMENT ===================== -->
+
+  <!-- ===================== SECTION PILOTES ===================== -->
+  <div id="section-pilotes" class="main-section">
+    <div class="section-title">Les Pilotes</div>
+    <div class="pilots-grid" id="pilots-grid"></div>
+  </div>
+  <!-- ===================== FIN SECTION PILOTES ===================== -->
+
+  <!-- ===================== SECTION VOITURES ===================== -->
+  <div id="section-voitures" class="main-section">
+    <div class="section-title">Les Voitures GT3</div>
+    <div class="cars-grid" id="cars-grid"></div>
+  </div>
+  <!-- ===================== FIN SECTION VOITURES ===================== -->
+
 </main>
 
 <footer>
@@ -310,13 +408,105 @@ const POINTS_BASE = { 1:10, 2:6, 3:4, 4:3, 5:2, 6:1 };
 const CALENDAR = [
   { manche:1, date:'15 avril 2026', status:'done' },
   { manche:2, date:'20 mai 2026',   status:'done' },
-  { manche:3, date:'17 juin 2026',  status:'done' },
-  { manche:4, date:'8 juillet 2026', status:'confirmed' },
-  { manche:5, date:'19 août 2026', status:'confirmed' },
+  { manche:3, date:'17 juin 2026',  status:'confirmed' },
+  { manche:4, date:'15 juillet 2026', status:'estimated' },
+  { manche:5, date:'19 août 2026', status:'estimated' },
   { manche:6, date:'16 sept. 2026', status:'estimated' },
   { manche:7, date:'14 oct. 2026', status:'estimated' },
   { manche:8, date:'11 nov. 2026', status:'estimated' }
 ];
+
+/* PROFILS PILOTES
+   "photo" : laisse vide ('') pour afficher un emplacement réservé (initiale du
+   pilote). Mets l'URL ou le chemin du fichier (ex: "photos/manu.jpg") une fois
+   les photos prêtes, et la photo s'affiche automatiquement à la place.
+   "valeurs" : 4 mots-clés affichés en chips (repris des figurines officielles).
+   "bio" : les champs sont libres — ajoute/retire des lignes selon ce que tu sais
+   de chaque pilote (début slotcar, premier modèle, anecdote, etc.). */
+const PILOT_PROFILES = {
+  manu: {
+    nom: 'Manu', numero: 95, nationalite: '🇧🇪 Belgique', couleur: 'var(--gold)',
+    photo: '',
+    citation: '',
+    valeurs: ['Expérience qui fait la différence', 'Focus sur l\'essentiel', 'Régularité tour après tour', 'Ambition sans limite'],
+    bio: [
+      { icon:'🏁', text:'Début slotcar : <strong>à compléter</strong>' },
+      { icon:'🚗', text:'Premier modèle : <strong>à compléter</strong>' },
+      { icon:'💬', text:'Anecdote : <strong>à compléter</strong>' }
+    ]
+  },
+  brice: {
+    nom: 'Brice', numero: 11, nationalite: '🇧🇷 Brésil', couleur: 'var(--blue)',
+    photo: '',
+    citation: 'Chaque virage est une opportunité, chaque course un défi à relever ! Le talent, la discipline, la vitesse pour aller plus loin !',
+    valeurs: ['Vitesse et Précision', 'Focus et Régularité', 'Progression Constante', 'Esprit d\'Équipe / Mental de Champion'],
+    bio: [
+      { icon:'🏁', text:'Début slotcar : <strong>à compléter</strong>' },
+      { icon:'🚗', text:'Premier modèle : <strong>à compléter</strong>' },
+      { icon:'💬', text:'Anecdote : <strong>à compléter</strong>' }
+    ]
+  },
+  alain: {
+    nom: 'Alain', numero: 60, nationalite: '🇧🇪 Belgique', couleur: 'var(--green)',
+    photo: '',
+    citation: '',
+    valeurs: ['Expérience qui fait la différence', 'Focus sur l\'essentiel', 'Régularité tour après tour', 'Ambition sans limite'],
+    bio: [
+      { icon:'🏁', text:'Début slotcar : <strong>à compléter</strong>' },
+      { icon:'🚗', text:'Premier modèle : <strong>à compléter</strong>' },
+      { icon:'💬', text:'Anecdote : <strong>à compléter</strong>' }
+    ]
+  },
+  philippe: {
+    nom: 'Philippe', numero: 5, nationalite: '🇧🇪 Belgique', couleur: 'var(--red)',
+    photo: '',
+    citation: 'La passion nous pousse, la rigueur nous guide, la victoire nous rassemble !',
+    valeurs: ['Expérience et Maîtrise', 'Performance et Régularité', 'Passion et Détermination', 'Toujours plus loin, ensemble'],
+    bio: [
+      { icon:'🏁', text:'Début slotcar : <strong>à compléter</strong>' },
+      { icon:'🚗', text:'Premier modèle : <strong>à compléter</strong>' },
+      { icon:'💬', text:'Anecdote : <strong>à compléter</strong>' }
+    ]
+  }
+};
+
+/* FICHES VOITURES GT3
+   "photo" : laisse vide ('') pour un emplacement réservé, ou mets une URL/chemin
+   de fichier une fois prêt. */
+const CARS = {
+  bmw: {
+    nomComplet: 'BMW M4 GT3', couleur: 'var(--gold)', photo: '',
+    constructeur: 'BMW M Motorsport', annee: '2022 (Evo 2026)',
+    moteur: '6 cylindres en ligne biturbo 3.0L (P58)', puissance: '590 ch',
+    poids: '1 285 kg', transmission: 'Séquentielle 6 rapports Xtrac, propulsion (RWD)',
+    prix: '≈ 520 000 €',
+    description: 'Successeur de la M6 GT3, la M4 GT3 mise sur un six cylindres turbo plus léger qu\'un V8 et sur une grande facilité d\'exploitation pour les équipes clientes. Elle s\'est imposée dans de nombreux championnats GT3 mondiaux, dont le GT World Challenge et l\'IMSA, et reçoit pour 2026 des évolutions de fiabilité et d\'aérodynamique.'
+  },
+  aston: {
+    nomComplet: 'Aston Martin Vantage GT3', couleur: 'var(--green)', photo: '',
+    constructeur: 'Aston Martin Racing / Prodrive', annee: '2024 (nouvelle génération)',
+    moteur: 'V8 90° biturbo 4.0L (bloc Mercedes-AMG)', puissance: '543 ch',
+    poids: '1 265 kg', transmission: 'Séquentielle 6 rapports Xtrac, propulsion (RWD)',
+    prix: 'Prix sur demande (segment GT3 premium)',
+    description: 'La nouvelle Vantage GT3, profondément remaniée en 2024, utilise un V8 biturbo développé avec Mercedes-AMG. Elle vise les épreuves d\'endurance les plus prestigieuses (24 Heures du Mans, du Nürburgring, GT World Challenge) avec un équilibre reconnu entre puissance et maniabilité pour pilotes professionnels et gentlemen drivers.'
+  },
+  porsche: {
+    nomComplet: 'Porsche 911 GT3 R (992)', couleur: 'var(--red)', photo: '',
+    constructeur: 'Porsche Motorsport', annee: '2023 (génération 992)',
+    moteur: '6 cylindres à plat (boxer) 4.2L atmosphérique', puissance: '565 ch',
+    poids: '≈ 1 250 kg', transmission: 'Séquentielle 6 rapports, propulsion (RWD)',
+    prix: '≈ 530 000 €',
+    description: 'Basée sur la génération 992 de la 911, cette GT3 R succède à une version qui a presque tout gagné en catégorie GT3 depuis 2019. Son six-cylindres boxer atmosphérique de 4,2L (contre 4,0L sur le modèle précédent) offre une courbe de puissance optimisée pour la régularité, un point fort recherché en endurance.'
+  },
+  mclaren: {
+    nomComplet: 'McLaren 720S GT3 EVO', couleur: 'var(--blue)', photo: '',
+    constructeur: 'McLaren Motorsport', annee: '2023 (kit Evo)',
+    moteur: 'V8 biturbo 4.0L (M840T)', puissance: '680 ch',
+    poids: '≈ 1 290 kg', transmission: 'Séquentielle 6 rapports à palettes, propulsion (RWD)',
+    prix: 'Prix sur demande (segment GT3 premium)',
+    description: 'Évolution majeure de la 720S GT3 qui dominait déjà les circuits depuis 2019, le kit Evo a permis à McLaren de revenir aux 24 Heures du Mans via la catégorie LMGT3 en 2024 — trente ans après la victoire historique de la F1 GTR. Châssis MonoCage II en carbone et V8 biturbo parmi les plus puissants du plateau GT3.'
+  }
+};
 
 /* RÉSULTATS BRUTS PAR CATÉGORIE
    Chaque manche = { manche, date, qualifs:[{pilote,temps}], course:[{pilote,temps,tours,position,fl}] }
@@ -821,6 +1011,94 @@ function toggleManche(toggleEl) {
   toggleEl.closest('.manche-block').classList.toggle('open');
 }
 
+function switchMainSection(id, btn) {
+  document.querySelectorAll('.main-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.main-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function renderPilotPhoto(photo, initiale) {
+  if (photo) return `<img src="${photo}" alt="${initiale}">`;
+  return `<span class="pilot-photo-placeholder">${initiale}</span>`;
+}
+
+function renderPilots() {
+  const grid = document.getElementById('pilots-grid');
+  const order = ['manu', 'brice', 'alain', 'philippe'];
+  grid.innerHTML = order.map(id => {
+    const p = PILOT_PROFILES[id];
+    const initiale = p.nom.charAt(0);
+    const quoteHTML = p.citation
+      ? `<div class="pilot-card-quote">"${p.citation}"</div>`
+      : '';
+    const valuesHTML = p.valeurs.map(v => `<span class="pilot-value-chip">${v}</span>`).join('');
+    const bioHTML = p.bio.map(b => `
+      <div class="pilot-bio-row">
+        <span class="pilot-bio-icon">${b.icon}</span>
+        <span class="pilot-bio-text">${b.text}</span>
+      </div>`).join('');
+
+    return `
+      <div class="pilot-card">
+        <div class="pilot-card-banner" style="background:${p.couleur}"></div>
+        <div class="pilot-card-top">
+          <div class="pilot-photo-wrap" style="border-color:${p.couleur}">
+            ${renderPilotPhoto(p.photo, initiale)}
+          </div>
+          <div class="pilot-id-block">
+            <div class="pilot-name-row">
+              <span class="pilot-card-name">${p.nom}</span>
+              <span class="pilot-card-number" style="color:${p.couleur}">#${p.numero}</span>
+            </div>
+            <div class="pilot-flag-nat">${p.nationalite} · GT3</div>
+            ${quoteHTML}
+          </div>
+        </div>
+        <div class="pilot-values-row">${valuesHTML}</div>
+        <div class="pilot-bio-section">
+          <div class="pilot-bio-label">À propos</div>
+          ${bioHTML}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function renderCarPhoto(photo, label) {
+  if (photo) return `<img src="${photo}" alt="${label}">`;
+  return `<span class="car-photo-placeholder">Photo à venir<br>${label}</span>`;
+}
+
+function renderCars() {
+  const grid = document.getElementById('cars-grid');
+  const order = ['bmw', 'aston', 'porsche', 'mclaren'];
+  grid.innerHTML = order.map(id => {
+    const c = CARS[id];
+    return `
+      <div class="car-card">
+        <div class="car-card-header">
+          <span class="car-card-dot" style="background:${c.couleur}"></span>
+          <span class="car-card-name">${c.nomComplet}</span>
+        </div>
+        <div class="car-card-body">
+          <div class="car-photo-wrap">${renderCarPhoto(c.photo, c.nomComplet)}</div>
+          <div class="car-specs">
+            <div class="car-specs-grid">
+              <div class="car-spec-item"><span class="car-spec-label">Constructeur</span><span class="car-spec-val">${c.constructeur}</span></div>
+              <div class="car-spec-item"><span class="car-spec-label">Génération</span><span class="car-spec-val">${c.annee}</span></div>
+              <div class="car-spec-item"><span class="car-spec-label">Moteur</span><span class="car-spec-val">${c.moteur}</span></div>
+              <div class="car-spec-item"><span class="car-spec-label">Puissance</span><span class="car-spec-val">${c.puissance}</span></div>
+              <div class="car-spec-item"><span class="car-spec-label">Poids</span><span class="car-spec-val">${c.poids}</span></div>
+              <div class="car-spec-item"><span class="car-spec-label">Transmission</span><span class="car-spec-val">${c.transmission}</span></div>
+              <div class="car-spec-item"><span class="car-spec-label">Prix indicatif</span><span class="car-spec-val">${c.prix}</span></div>
+            </div>
+            <div class="car-desc">${c.description}</div>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
 function renderDailyContent() {
   const container = document.getElementById('daily-content-block');
   if (typeof DAILY_CONTENT === 'undefined') { container.innerHTML = ''; return; }
@@ -856,6 +1134,8 @@ function renderDailyContent() {
 
 renderAll();
 renderDailyContent();
+renderPilots();
+renderCars();
 </script>
 
 </body>
