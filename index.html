@@ -33,6 +33,16 @@
   .stat-pill .val { font-family:'Rajdhani',sans-serif; font-size:1.4rem; font-weight:700; color:var(--gold); line-height:1; }
   .stat-pill .lbl { font-size:.62rem; font-weight:500; letter-spacing:.12em; color:var(--muted); text-transform:uppercase; }
   .live-badge { background:var(--red); color:white; font-family:'Rajdhani',sans-serif; font-weight:700; font-size:.75rem; letter-spacing:.15em; padding:4px 10px; border-radius:2px; text-transform:uppercase; animation:pulse-badge 2s ease-in-out infinite; }
+
+  .social-links { display:flex; gap:8px; }
+  .social-link {
+    width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:var(--surface2); border:1px solid var(--border); color:var(--text);
+    text-decoration:none; transition:all .15s; flex-shrink:0;
+  }
+  .social-link svg { width:17px; height:17px; }
+  .social-link.instagram:hover { background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border-color:transparent; }
+  .social-link.youtube:hover { background:#FF0000; border-color:transparent; }
   @keyframes pulse-badge { 0%,100%{opacity:1} 50%{opacity:.65} }
 
   main { max-width:1200px; margin:0 auto; padding:2rem; }
@@ -159,6 +169,35 @@
 
   .empty-state { padding:2rem 1.5rem; text-align:center; color:var(--muted); font-size:.85rem; }
 
+  /* PREDICTION BLOCK */
+  .prediction-block { background:var(--surface); border:1px solid var(--border); border-radius:4px; margin-bottom:2.5rem; overflow:hidden; }
+  .prediction-header {
+    padding:1rem 1.5rem; background:linear-gradient(135deg,#1A0E08,#1A1408);
+    border-bottom:1px solid #3A2410; display:flex; align-items:center; gap:.8rem;
+    flex-wrap:wrap;
+  }
+  .prediction-header-title { font-family:'Rajdhani',sans-serif; font-size:.78rem; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); }
+  .prediction-manche-tag {
+    margin-left:auto; font-family:'Rajdhani',sans-serif; font-size:.7rem; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .prediction-body { padding:1.3rem 1.5rem; }
+  .prediction-intro { font-size:.85rem; color:var(--muted); line-height:1.5; margin-bottom:1.2rem; }
+  .prediction-favorite-row {
+    display:flex; align-items:center; gap:1rem; padding:1rem; background:var(--surface2);
+    border-radius:4px; margin-bottom:1.2rem; flex-wrap:wrap;
+  }
+  .prediction-trophy { font-size:1.8rem; flex-shrink:0; }
+  .prediction-favorite-name { font-family:'Rajdhani',sans-serif; font-size:1.3rem; font-weight:700; }
+  .prediction-favorite-sub { font-size:.78rem; color:var(--muted); margin-top:2px; }
+  .prediction-stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:.8rem; }
+  @media(max-width:700px){ .prediction-stats-grid{grid-template-columns:repeat(2,1fr);} }
+  .prediction-stat-card { background:var(--surface2); border:1px solid var(--border); border-radius:3px; padding:.8rem .9rem; }
+  .prediction-stat-name { font-family:'Rajdhani',sans-serif; font-size:.85rem; font-weight:700; margin-bottom:.4rem; }
+  .prediction-stat-line { font-size:.7rem; color:var(--muted); display:flex; justify-content:space-between; margin-bottom:2px; }
+  .prediction-stat-line span:last-child { color:var(--text); font-weight:600; }
+  .prediction-disclaimer { font-size:.7rem; color:var(--muted); font-style:italic; margin-top:1rem; text-align:center; }
+
   /* MAIN SECTION NAV (Classement / Pilotes / Voitures) */
   .main-nav { display:flex; gap:.6rem; margin-bottom:2rem; flex-wrap:wrap; }
   .main-nav-btn {
@@ -270,6 +309,14 @@
       <div class="stat-pill"><span class="val" id="stat-manches">0</span><span class="lbl">Manches</span></div>
       <div class="stat-pill"><span class="val">8</span><span class="lbl">Total</span></div>
       <span class="live-badge">LIVE STANDINGS</span>
+      <div class="social-links">
+        <a class="social-link instagram" href="https://www.instagram.com/cottage_racing_132/" target="_blank" rel="noopener" aria-label="Instagram Cottage Racing">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a class="social-link youtube" href="https://www.youtube.com/@ZeSlotCar" target="_blank" rel="noopener" aria-label="YouTube Ze SlotCar Studio">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6z"/></svg>
+        </a>
+      </div>
     </div>
   </div>
 </header>
@@ -286,6 +333,8 @@
 
   <!-- ===================== SECTION CLASSEMENT ===================== -->
   <div id="section-classement" class="main-section active">
+
+  <div id="prediction-block"></div>
 
   <div class="section-title">Classement Général</div>
   <div class="champ-block">
@@ -793,6 +842,61 @@ function generalStandings() {
   return arr;
 }
 
+// Calcule un "indice de forme" par pilote à partir de l'historique de toutes les
+// manches déjà disputées (toutes catégories confondues), en donnant un poids plus
+// fort aux manches récentes. Sert uniquement à teaser un pronostic, pas une science exacte.
+function computePrediction() {
+  // Rassemble toutes les manches jouées, toutes catégories, avec leur numéro de manche
+  let allManches = []; // { mancheNum, points: {pilote: pts} }
+  const manchesByNum = {};
+  CATEGORIES.forEach(cat => {
+    (RACES[cat.id]||[]).forEach(race => {
+      const pts = computeManchePoints(sortRace(race));
+      if (!manchesByNum[race.manche]) manchesByNum[race.manche] = {};
+      PILOTS.forEach(p => {
+        manchesByNum[race.manche][p.name] = (manchesByNum[race.manche][p.name]||0) + (pts[p.name]||0);
+      });
+    });
+  });
+
+  const mancheNums = Object.keys(manchesByNum).map(Number).sort((a,b) => a-b);
+  if (mancheNums.length === 0) return null;
+
+  const nextManche = mancheNums[mancheNums.length - 1] + 1;
+  if (nextManche > 8) return null; // saison terminée
+
+  // Poids croissant pour les manches récentes (la dernière manche pèse le plus)
+  const weighted = {};
+  PILOTS.forEach(p => weighted[p.name] = { sum:0, weightSum:0, history:[] });
+
+  mancheNums.forEach((num, idx) => {
+    const weight = idx + 1; // plus l'index est grand (manche récente), plus le poids est fort
+    PILOTS.forEach(p => {
+      const pts = manchesByNum[num][p.name] || 0;
+      weighted[p.name].sum += pts * weight;
+      weighted[p.name].weightSum += weight;
+      weighted[p.name].history.push(pts);
+    });
+  });
+
+  const results = PILOTS.map(p => {
+    const w = weighted[p.name];
+    const formIndex = w.weightSum > 0 ? w.sum / w.weightSum : 0;
+    const lastManchePts = w.history[w.history.length - 1] || 0;
+    const totalPts = w.history.reduce((a,b) => a+b, 0);
+    // Tendance : compare la dernière manche à la moyenne des précédentes
+    const previous = w.history.slice(0, -1);
+    const prevAvg = previous.length ? previous.reduce((a,b)=>a+b,0)/previous.length : lastManchePts;
+    let tendance = 'stable';
+    if (lastManchePts > prevAvg + 1) tendance = 'hausse';
+    else if (lastManchePts < prevAvg - 1) tendance = 'baisse';
+    return { name:p.name, formIndex, lastManchePts, totalPts, tendance };
+  });
+
+  results.sort((a,b) => b.formIndex - a.formIndex);
+  return { nextManche, results, manchesJouees: mancheNums.length };
+}
+
 // Record (meilleur temps) qualifs et course pour une catégorie, avec attribution manche/date
 function categoryRecords(catId) {
   const races = RACES[catId] || [];
@@ -822,6 +926,45 @@ function fillClassForRank(i) {
 /* ============================================================
    RENDU — génère le HTML à partir des données calculées
    ============================================================ */
+
+function renderPrediction() {
+  const container = document.getElementById('prediction-block');
+  const pred = computePrediction();
+  if (!pred || pred.results.length === 0) { container.innerHTML = ''; return; }
+
+  const favorite = pred.results[0];
+  const tendanceIcon = { hausse:'📈', baisse:'📉', stable:'➡️' };
+  const tendanceLabel = { hausse:'En hausse', baisse:'En retrait', stable:'Stable' };
+
+  const statsCardsHTML = pred.results.map(r => `
+    <div class="prediction-stat-card">
+      <div class="prediction-stat-name ${pClass(r.name)}">${r.name}</div>
+      <div class="prediction-stat-line"><span>Forme pondérée</span><span>${r.formIndex.toFixed(1)} pts</span></div>
+      <div class="prediction-stat-line"><span>Dernière manche</span><span>${r.lastManchePts} pts</span></div>
+      <div class="prediction-stat-line"><span>Tendance</span><span>${tendanceIcon[r.tendance]} ${tendanceLabel[r.tendance]}</span></div>
+    </div>`).join('');
+
+  container.innerHTML = `
+    <div class="prediction-block">
+      <div class="prediction-header">
+        <span>🔮</span>
+        <span class="prediction-header-title">Pronostic — avant la Manche ${pred.nextManche}</span>
+        <span class="prediction-manche-tag">Basé sur ${pred.manchesJouees} manche${pred.manchesJouees > 1 ? 's' : ''} disputée${pred.manchesJouees > 1 ? 's' : ''}</span>
+      </div>
+      <div class="prediction-body">
+        <div class="prediction-intro">D'après la forme récente sur la saison, voici qui semble le mieux placé pour briller à la prochaine manche — un teaser pour le moins sérieux, le tarmac aura le dernier mot 😏</div>
+        <div class="prediction-favorite-row">
+          <span class="prediction-trophy">🏆</span>
+          <div>
+            <div class="prediction-favorite-name ${pClass(favorite.name)}">${favorite.name}</div>
+            <div class="prediction-favorite-sub">Favori du moment · ${tendanceIcon[favorite.tendance]} ${tendanceLabel[favorite.tendance]} · ${favorite.totalPts} pts cumulés sur la saison</div>
+          </div>
+        </div>
+        <div class="prediction-stats-grid">${statsCardsHTML}</div>
+        <div class="prediction-disclaimer">Pronostic généré pour le fun à partir des résultats passés — aucune garantie sur le bitume !</div>
+      </div>
+    </div>`;
+}
 
 function renderGeneral() {
   const standings = generalStandings();
@@ -1138,6 +1281,7 @@ renderAll();
 renderDailyContent();
 renderPilots();
 renderCars();
+renderPrediction();
 </script>
 
 </body>
