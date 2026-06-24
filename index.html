@@ -171,6 +171,30 @@
   @media(max-width:640px){ main{padding:1rem;} .lb-row{grid-template-columns:36px 1fr repeat(2,52px) 64px;} .lb-cat-bmw,.lb-cat-aston{display:none;} .header-stats{gap:1rem;} }
 
   @keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+  .virtual-best-card{background:linear-gradient(135deg,var(--surface),var(--surface2));border:1.5px solid var(--gold);border-radius:8px;padding:1.2rem 1.5rem;margin-bottom:1.8rem;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap}
+  .virtual-badge{background:var(--gold);color:#000;font-weight:800;font-size:.68rem;letter-spacing:.1em;padding:.3rem .6rem;border-radius:4px;text-transform:uppercase;white-space:nowrap}
+  .virtual-label{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
+  .virtual-time{font-size:2rem;font-weight:900;color:var(--gold);letter-spacing:.05em;line-height:1}
+  .virtual-sectors{display:flex;gap:1rem;margin-top:.6rem;flex-wrap:wrap}
+  .vsector{background:var(--surface);border:1px solid var(--border);border-radius:5px;padding:.4rem .8rem}
+  .vsector-lbl{font-size:.6rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+  .vsector-t{font-size:1rem;font-weight:700;color:#22c55e}
+  .vsector-p{font-size:.7rem;color:var(--text)}
+  .circuit-table{width:100%;border-collapse:collapse;font-size:.83rem}
+  .circuit-table thead{background:var(--surface2)}
+  .circuit-table th{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.6rem .7rem;text-align:left;border-bottom:1.5px solid var(--border)}
+  .circuit-table th.r{text-align:right}
+  .circuit-table td{padding:.55rem .7rem;border-bottom:1px solid rgba(42,42,62,.6);vertical-align:middle}
+  .circuit-table td.r{text-align:right;font-variant-numeric:tabular-nums}
+  .circuit-table tr:hover td{background:rgba(255,255,255,.03)}
+  .ct-rank{font-weight:900;font-size:.95rem}
+  .ct-rank.gold{color:#ffd700}.ct-rank.silver{color:#c0c0c0}.ct-rank.bronze{color:#cd7f32}
+  .ct-pilot-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:3px;font-size:.65rem;font-weight:800;margin-right:.4rem;vertical-align:middle}
+  .ct-total{font-weight:800;font-variant-numeric:tabular-nums}
+  .ct-gap{color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums}
+  .ct-s{color:var(--muted);font-size:.78rem;font-variant-numeric:tabular-nums}
+  .ct-s.best-s{color:#22c55e!important;font-weight:700}
   .champ-block,.tabs-wrap{animation:slideUp .5s ease forwards}
 
   .p-manu{color:var(--gold)} .p-brice{color:var(--blue)} .p-alain{color:var(--green)} .p-philippe{color:var(--red)}
@@ -337,6 +361,7 @@
     <button class="main-nav-btn active" onclick="switchMainSection('classement', this)">🏆 Classement</button>
     <button class="main-nav-btn" onclick="switchMainSection('pilotes', this)">👤 Pilotes</button>
     <button class="main-nav-btn" onclick="switchMainSection('voitures', this)">🏎️ Voitures</button>
+    <button class="main-nav-btn" onclick="switchMainSection('circuit', this)">⏱️ Circuit</button>
   </div>
 
   <!-- ===================== SECTION CLASSEMENT ===================== -->
@@ -433,6 +458,31 @@
     <div class="cars-grid" id="cars-grid"></div>
   </div>
   <!-- ===================== FIN SECTION VOITURES ===================== -->
+  <div id="section-circuit" class="main-section">
+    <div class="virtual-best-card">
+      <div><div class="virtual-badge">⚡ Temps virtuel</div></div>
+      <div>
+        <div class="virtual-label">Meilleur tour théorique – mix meilleurs secteurs</div>
+        <div class="virtual-time">0:09.055</div>
+        <div class="virtual-sectors">
+          <div class="vsector"><div class="vsector-lbl">S1</div><div class="vsector-t">4.156s</div><div class="vsector-p">MANU – McLaren 720S GT3 N°85</div></div>
+          <div class="vsector"><div class="vsector-lbl">S2</div><div class="vsector-t">3.304s</div><div class="vsector-p">MANU – Porsche 911 RSR N°54</div></div>
+          <div class="vsector"><div class="vsector-lbl">S3</div><div class="vsector-t">1.595s</div><div class="vsector-p">ALAIN – McLaren 720S GT3 N°3</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="section-title">Classement complet – 51 entrées vérifiées</div>
+    <div style="overflow-x:auto">
+      <table class="circuit-table">
+        <thead><tr>
+          <th style="width:36px">#</th><th>Pilote</th><th>Voiture</th>
+          <th class="r">Temps</th><th class="r">Écart</th>
+          <th class="r">S1</th><th class="r">S2</th><th class="r">S3</th>
+        </tr></thead>
+        <tbody id="circuit-tbody"></tbody>
+      </table>
+    </div>
+  </div>
 
 </main>
 
@@ -1309,6 +1359,86 @@ renderDailyContent();
 renderPilots();
 renderCars();
 renderPrediction();
+
+const CIRCUIT_LAPS = [
+  {pos:1, pilote:"MANU", voiture:"McLaren 720S GT3 - N° 85", total:9.241, s1:4.156, s2:3.446, s3:1.639, delta:"–", anom:false},
+  {pos:2, pilote:"MANU", voiture:"Porsche 911 RSR - N° 54", total:9.336, s1:4.260, s2:3.304, s3:1.772, delta:"+0.095", anom:false},
+  {pos:3, pilote:"BRICE", voiture:"Porsche 911 RSR - N° 93", total:9.370, s1:4.373, s2:3.379, s3:1.618, delta:"+0.129", anom:false},
+  {pos:4, pilote:"MANU", voiture:"BMW Z4 GT3 - N° 12", total:9.655, s1:4.382, s2:3.509, s3:1.764, delta:"+0.414", anom:false},
+  {pos:5, pilote:"PHILIPPE", voiture:"McLaren 720S GT3 - N° 76", total:9.776, s1:4.478, s2:3.483, s3:1.815, delta:"+0.535", anom:false},
+  {pos:6, pilote:"PHILIPPE", voiture:"Porsche 911 RSR - N° 86", total:9.792, s1:4.340, s2:3.561, s3:1.891, delta:"+0.551", anom:false},
+  {pos:7, pilote:"MANU", voiture:"BMW M4 GT3 - N° 31", total:9.826, s1:4.469, s2:3.490, s3:1.867, delta:"+0.585", anom:false},
+  {pos:8, pilote:"MANU", voiture:"Aston Martin Vantage GTE - N° 95", total:9.844, s1:4.666, s2:3.351, s3:1.827, delta:"+0.603", anom:false},
+  {pos:9, pilote:"BRICE", voiture:"McLaren 720S GT3 - N° 22", total:9.874, s1:4.438, s2:3.574, s3:1.862, delta:"+0.633", anom:false},
+  {pos:10, pilote:"PHILIPPE", voiture:"Porsche 911 RSR - N° 54", total:9.948, s1:4.512, s2:3.545, s3:1.891, delta:"+0.707", anom:false},
+  {pos:11, pilote:"BRICE", voiture:"Ferrari 296 GT3 - N° 21", total:9.993, s1:4.575, s2:3.606, s3:1.812, delta:"+0.752", anom:false},
+  {pos:12, pilote:"BRICE", voiture:"Mercedes AMG GT3 - N° 20", total:9.998, s1:4.384, s2:3.742, s3:1.872, delta:"+0.757", anom:false},
+  {pos:13, pilote:"BRICE", voiture:"BMW M4 GT3 - N° 15", total:10.182, s1:4.545, s2:3.754, s3:1.883, delta:"+0.941", anom:false},
+  {pos:14, pilote:"PHILIPPE", voiture:"Aston Martin Vantage GT3 - N° 7", total:10.184, s1:4.655, s2:3.628, s3:1.901, delta:"+0.943", anom:false},
+  {pos:15, pilote:"ALAIN", voiture:"McLaren 720S GT3 - N° 3", total:10.273, s1:4.585, s2:4.093, s3:1.595, delta:"+1.032", anom:false},
+  {pos:16, pilote:"MANU", voiture:"BMW M6 GT3 - N° 99", total:10.293, s1:4.612, s2:3.749, s3:1.932, delta:"+1.052", anom:false},
+  {pos:17, pilote:"PHILIPPE", voiture:"Porsche 935 GT2 - N° 70", total:10.297, s1:4.698, s2:3.634, s3:1.965, delta:"+1.056", anom:false},
+  {pos:18, pilote:"MANU", voiture:"Ferrari 296 GT3 - N° 74", total:10.299, s1:4.728, s2:3.657, s3:1.914, delta:"+1.058", anom:false},
+  {pos:19, pilote:"BRICE", voiture:"KTM X-BOW GT2 - N° 16", total:10.317, s1:4.642, s2:3.859, s3:1.816, delta:"+1.076", anom:false},
+  {pos:20, pilote:"BRICE", voiture:"Aston Martin Vantage AMR GT3 EVO - N° 36", total:10.471, s1:4.855, s2:3.704, s3:1.912, delta:"+1.230", anom:false},
+  {pos:21, pilote:"ALAIN", voiture:"Porsche 911 GT3 R - N° 75", total:10.526, s1:4.866, s2:3.659, s3:2.001, delta:"+1.285", anom:false},
+  {pos:22, pilote:"MANU", voiture:"KTM X-BOW GTX - N° 104", total:10.556, s1:4.758, s2:3.826, s3:1.972, delta:"+1.315", anom:false},
+  {pos:23, pilote:"ALAIN", voiture:"McLaren 720S GT3 - N° 15", total:10.607, s1:4.948, s2:3.603, s3:2.056, delta:"+1.366", anom:false},
+  {pos:24, pilote:"MANU", voiture:"Aston Martin Vantage GT3 - N° 97", total:10.625, s1:4.705, s2:4.042, s3:1.878, delta:"+1.384", anom:false},
+  {pos:25, pilote:"MANU", voiture:"Porsche 911 GT3 R - N° 75", total:10.649, s1:4.759, s2:3.829, s3:2.061, delta:"+1.408", anom:false},
+  {pos:26, pilote:"PHILIPPE", voiture:"BMW M4 DTM - N° 16", total:10.657, s1:4.752, s2:3.882, s3:2.023, delta:"+1.416", anom:false},
+  {pos:27, pilote:"PHILIPPE", voiture:"PHIL_917", total:10.701, s1:4.778, s2:3.887, s3:2.036, delta:"+1.460", anom:false},
+  {pos:28, pilote:"MANU", voiture:"Mercedes-AMG GT3 ÉVOQUE - N° 4", total:10.905, s1:4.998, s2:3.903, s3:2.004, delta:"+1.664", anom:false},
+  {pos:29, pilote:"PHILIPPE", voiture:"BMW M4 GT3 - N° 10", total:10.913, s1:4.983, s2:3.828, s3:2.102, delta:"+1.672", anom:false},
+  {pos:30, pilote:"MANU", voiture:"BMW Z4 GT3 - N° 36", total:10.968, s1:5.070, s2:3.925, s3:1.973, delta:"+1.727", anom:false},
+  {pos:31, pilote:"MANU", voiture:"Aston Martin Vantage GT3 - N° 99", total:10.996, s1:4.959, s2:4.076, s3:1.961, delta:"+1.755", anom:false},
+  {pos:32, pilote:"MANU", voiture:"Aston Martin Vantage GTE - N° 33", total:11.165, s1:5.059, s2:3.994, s3:2.112, delta:"+1.924", anom:false},
+  {pos:33, pilote:"MANU", voiture:"Aston Martin Vantage GT3 - N° 98", total:11.197, s1:5.025, s2:4.166, s3:2.006, delta:"+1.956", anom:false},
+  {pos:34, pilote:"BRICE", voiture:"BMW M6 GT3 - N° 3", total:11.257, s1:5.057, s2:4.191, s3:2.009, delta:"+2.016", anom:false},
+  {pos:35, pilote:"ALAIN", voiture:"BMW M4 GT3 - N° 11", total:11.302, s1:5.163, s2:3.975, s3:2.164, delta:"+2.061", anom:false},
+  {pos:36, pilote:"MANU", voiture:"Mercedes AMG GT3 EVO - N°", total:11.324, s1:5.238, s2:4.072, s3:2.014, delta:"+2.083", anom:false},
+  {pos:37, pilote:"Rafaël", voiture:"Lamborghini Huracán GT3 Evo2 - N° 27", total:11.337, s1:5.333, s2:3.872, s3:2.132, delta:"+2.096", anom:false},
+  {pos:38, pilote:"MANU", voiture:"Porsche GT3 R - N° 24", total:11.472, s1:5.091, s2:4.414, s3:1.967, delta:"+2.231", anom:false},
+  {pos:39, pilote:"ALAIN", voiture:"Audi R8 LMS GT3 EVO II - N° 16", total:11.525, s1:5.256, s2:4.124, s3:2.145, delta:"+2.284", anom:false},
+  {pos:40, pilote:"ALAIN", voiture:"Porsche 911 GT3 R - N° 25", total:11.546, s1:5.256, s2:4.111, s3:2.179, delta:"+2.305", anom:false},
+  {pos:41, pilote:"ALAIN", voiture:"Aston Martin Vantage GT3 - N° 99", total:11.555, s1:5.167, s2:4.019, s3:2.369, delta:"+2.314", anom:false},
+  {pos:42, pilote:"Dimitri", voiture:"Porsche 935/19 GT2", total:11.797, s1:6.107, s2:3.544, s3:2.146, delta:"+2.556", anom:false},
+  {pos:43, pilote:"THIERRY", voiture:"Ford GT Race Car - N° 67", total:11.828, s1:9.656, s2:2.172, s3:0.000, delta:"+2.587", anom:true},
+  {pos:45, pilote:"BRICE", voiture:"Aston Martin Vantage GT3 - N° 23", total:11.898, s1:5.589, s2:4.144, s3:2.165, delta:"+2.657", anom:false},
+  {pos:46, pilote:"ALAIN", voiture:"Audi R8 LMS GT3 EVO II - N° 8", total:11.930, s1:5.612, s2:4.223, s3:2.095, delta:"+2.689", anom:false},
+  {pos:47, pilote:"ALAIN", voiture:"Audi RS 5 DTM - N° 51", total:11.964, s1:5.396, s2:4.321, s3:2.247, delta:"+2.723", anom:false},
+  {pos:48, pilote:"ALAIN", voiture:"Mercedes-AMG GT3 EVO - N° 16", total:11.974, s1:5.624, s2:4.257, s3:2.093, delta:"+2.733", anom:false},
+  {pos:49, pilote:"ALAIN", voiture:"Aston Martin Vantage GTE - N° 34", total:12.211, s1:5.473, s2:4.401, s3:2.337, delta:"+2.970", anom:false},
+  {pos:50, pilote:"ALAIN", voiture:"BMW M4 GT3 - N° 10", total:12.226, s1:5.455, s2:4.271, s3:2.500, delta:"+2.985", anom:false},
+  {pos:51, pilote:"MAUDE", voiture:"Mercedes AMG GT3 EVO - N°", total:12.343, s1:5.400, s2:4.650, s3:2.293, delta:"+3.102", anom:false},
+  {pos:52, pilote:"ALAIN", voiture:"Aston Martin Vantage AMR GT3 EVO - N° 36", total:12.456, s1:5.581, s2:4.465, s3:2.410, delta:"+3.215", anom:false},
+];
+
+const BEST_S1=4.156, BEST_S2=3.304, BEST_S3=1.595;
+
+function renderCircuit(){
+  const colorMap={MANU:"var(--gold)",BRICE:"var(--blue)",ALAIN:"var(--green)",PHILIPPE:"var(--red)",MAUDE:"#a855f7","Rafaël":"#06b6d4",THIERRY:"#f97316",DANIEL:"#8b5cf6",Dimitri:"#ec4899"};
+  const fmt=v=>{const[s,m]=v.toFixed(3).split(".");return`0:${s.padStart(2,"0")}.${m}`;};
+  document.getElementById("circuit-tbody").innerHTML=CIRCUIT_LAPS.map(l=>{
+    const rc=l.pos===1?"gold":l.pos===2?"silver":l.pos===3?"bronze":"";
+    const color=colorMap[l.pilote]||"var(--muted)";
+    const s1c=(!l.anom&&l.s1===BEST_S1)?" best-s":"";
+    const s2c=(!l.anom&&l.s2===BEST_S2)?" best-s":"";
+    const s3c=(!l.anom&&l.s3===BEST_S3)?" best-s":"";
+    const sd=v=>l.anom?`<span style="color:var(--muted);font-size:.7rem">–</span>`:v.toFixed(3);
+    return`<tr>
+      <td><span class="ct-rank ${rc}">${l.pos}</span></td>
+      <td><span class="ct-pilot-badge" style="background:${color};color:#000">${l.pilote[0]}</span>${l.pilote}</td>
+      <td style="color:var(--muted);font-size:.78rem">${l.voiture}</td>
+      <td class="r ct-total">${fmt(l.total)}</td>
+      <td class="r ct-gap">${l.delta}</td>
+      <td class="r ct-s${s1c}">${sd(l.s1)}</td>
+      <td class="r ct-s${s2c}">${sd(l.s2)}</td>
+      <td class="r ct-s${s3c}">${sd(l.s3)}</td>
+    </tr>`;
+  }).join("");
+}
+renderCircuit();
 </script>
 
 </body>
