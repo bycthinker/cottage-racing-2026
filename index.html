@@ -18,13 +18,15 @@
     --text: #E8E8F0; --muted: #7A7A9A; --red: #E63946; --gold: #FFB703;
     --blue: #4CC9F0; --green: #06D6A0; --white: #FFFFFF;
     --pilot-brice:#FFD400; --pilot-philippe:#FF8C00; --pilot-alain:#FF4FA3; --pilot-manu:#003B8E;
+    --page-max:1200px; --ui-scale:1;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
+  html { font-size:calc(16px * var(--ui-scale)); }
   body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; overflow-x:hidden; }
   .track-line { height:3px; background:linear-gradient(90deg,transparent,var(--red),var(--gold),var(--blue),transparent); }
 
   header { background:var(--surface); border-bottom:1px solid var(--border); padding:0 2rem; }
-  .header-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 0; gap:1rem; flex-wrap:wrap; }
+  .header-inner { max-width:var(--page-max); margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:1.2rem 0; gap:1rem; flex-wrap:wrap; }
   .logo-block { display:flex; flex-direction:column; gap:2px; }
   .logo-eyebrow { font-family:'Rajdhani',sans-serif; font-size:.7rem; font-weight:600; letter-spacing:.2em; color:var(--muted); text-transform:uppercase; }
   .logo-title { font-family:'Rajdhani',sans-serif; font-size:1.8rem; font-weight:700; line-height:1; color:var(--white); letter-spacing:.05em; }
@@ -46,7 +48,7 @@
   .social-link.youtube:hover { background:#FF0000; border-color:transparent; }
   @keyframes pulse-badge { 0%,100%{opacity:1} 50%{opacity:.65} }
 
-  main { max-width:1200px; margin:0 auto; padding:2rem; }
+  main { max-width:var(--page-max); margin:0 auto; padding:2rem; }
   .section-title { font-family:'Rajdhani',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.22em; color:var(--muted); text-transform:uppercase; margin-bottom:1rem; }
 
   .champ-block { background:var(--surface); border:1px solid var(--border); border-radius:4px; margin-bottom:2.5rem; overflow:hidden; }
@@ -110,11 +112,18 @@
   .manche-block.open .manche-chevron { transform:rotate(180deg); }
   .manche-num { font-family:'Rajdhani',sans-serif; font-size:.65rem; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
   .manche-date { font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:600; color:var(--white); }
-  .manche-badges { display:flex; gap:8px; flex-wrap:wrap; }
-  .badge { font-family:'Rajdhani',sans-serif; font-size:.65rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border-radius:2px; display:flex; align-items:center; gap:4px; }
-  .badge-pole{background:rgba(76,201,240,.15);color:var(--blue);border:1px solid rgba(76,201,240,.3)}
-  .badge-winner{background:rgba(255,183,3,.15);color:var(--gold);border:1px solid rgba(255,183,3,.3)}
-  .badge-fl{background:rgba(6,214,160,.15);color:var(--green);border:1px solid rgba(6,214,160,.3)}
+  .manche-badges { display:flex; gap:10px; flex-wrap:wrap; align-items:stretch; }
+  .badge { font-family:'Rajdhani',sans-serif; font-size:.74rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:7px 10px; border-radius:4px; display:flex; align-items:center; gap:7px; min-height:42px; }
+  .badge-pole{background:rgba(76,201,240,.15);color:var(--blue);border:1px solid rgba(76,201,240,.35)}
+  .badge-winner{background:rgba(255,183,3,.15);color:var(--gold);border:1px solid rgba(255,183,3,.35)}
+  .badge-fl{background:rgba(6,214,160,.15);color:var(--green);border:1px solid rgba(6,214,160,.35)}
+  .badge-icon { font-size:1rem; line-height:1; opacity:.95; }
+  .badge-stack { display:flex; flex-direction:column; gap:1px; line-height:1.05; }
+  .badge-title { font-size:.62rem; letter-spacing:.18em; color:currentColor; opacity:.85; }
+  .badge-pilot { font-size:.86rem; font-weight:800; letter-spacing:.08em; color:var(--white); }
+  .badge-time { font-size:1.18rem; font-weight:800; letter-spacing:.04em; color:var(--white); font-variant-numeric:tabular-nums; }
+  .badge-winner .badge-pilot { color:var(--gold); }
+  @media(max-width:640px){ .manche-badges{width:100%;gap:7px;} .badge{flex:1 1 145px;padding:7px 8px;} .badge-time{font-size:1.08rem;} }
   .manche-body { display:none; }
   .manche-block.open .manche-body { display:block; }
 
@@ -303,6 +312,20 @@
   .main-nav-btn.active { background:var(--red); color:#fff; border-color:var(--red); }
   .main-section { display:none; }
   .main-section.active { display:block; }
+
+  /* RESPONSIVE VIEW MODES */
+  .view-toolbar { display:flex; align-items:center; justify-content:flex-end; gap:.45rem; margin:-1rem 0 1.5rem; flex-wrap:wrap; }
+  .view-toolbar-label { font-size:.62rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-right:.25rem; }
+  .view-mode-btn { font-family:'Rajdhani',sans-serif; font-size:.72rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; padding:.35rem .75rem; border-radius:3px; cursor:pointer; background:var(--surface); border:1px solid var(--border); color:var(--muted); transition:all .15s; }
+  .view-mode-btn:hover { color:var(--text); border-color:#3A3A52; }
+  .view-mode-btn.active { color:#fff; background:var(--red); border-color:var(--red); }
+
+  @media(min-width:1500px){ body:not(.view-compact):not(.view-wide):not(.view-tv){ --page-max: 1480px; } }
+  @media(min-width:2100px){ body:not(.view-compact):not(.view-wide):not(.view-tv){ --page-max: 1780px; --ui-scale: 1.06; } }
+  @media(max-width:1100px){ .view-toolbar{justify-content:flex-start;margin:-.5rem 0 1.2rem;} .header-inner{align-items:flex-start;} }
+  @media(max-width:760px){ header{padding:0 1rem;} .logo-title{font-size:1.35rem;} .view-toolbar{gap:.35rem;} .view-mode-btn{padding:.35rem .6rem;} }
+  @media(max-width:520px){ main{padding:.85rem;} .main-nav{gap:.4rem;margin-bottom:1.2rem;} .main-nav-btn{font-size:.75rem;padding:.55rem .85rem;} .view-toolbar-label{width:100%;} .view-toolbar{margin:0 0 1.1rem;} }
+  @media(orientation:landscape) and (max-width:1050px){ main{max-width:100%;padding:1rem 1.25rem;} .daily-block,.pilots-grid,.sessions-grid,.record-grid{grid-template-columns:1fr 1fr;} }
 
   /* PILOT CARDS */
   .pilots-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; margin-bottom:2.5rem; }
@@ -1305,7 +1328,9 @@ function renderSessionTable(rows, type) {
 
 function renderMancheBlock(catId, rawRace, isOpen) {
   const race = sortRace(rawRace);
-  const polePilote = race.qualifs[0]?.pilote || '?';
+  const poleEntry = race.qualifs[0];
+  const polePilote = poleEntry?.pilote || '?';
+  const poleTemps = poleEntry ? poleEntry.temps.toFixed(3) : '?';
   const vainqueur = race.course[0]?.pilote || '?';
   const flEntry = race.course.find(c => c.fl);
   const flPilote = flEntry?.pilote || '?';
@@ -1324,9 +1349,9 @@ function renderMancheBlock(catId, rawRace, isOpen) {
         <span class="manche-num">Manche ${race.manche}</span>
         <span class="manche-date">${race.date}</span>
         <div class="manche-badges">
-          <span class="badge badge-pole">🎯 Pole · ${polePilote}</span>
-          <span class="badge badge-winner">🏆 ${vainqueur}</span>
-          <span class="badge badge-fl">⚡ ${flTemps}s · ${flPilote}</span>
+          <span class="badge badge-pole"><span class="badge-icon">🎯</span><span class="badge-stack"><span class="badge-title">Pole</span><span class="badge-pilot ${pClass(polePilote)}">${polePilote}</span><span class="badge-time">${poleTemps}s</span></span></span>
+          <span class="badge badge-winner"><span class="badge-icon">🏆</span><span class="badge-stack"><span class="badge-title">Victoire</span><span class="badge-pilot ${pClass(vainqueur)}">${vainqueur}</span></span></span>
+          <span class="badge badge-fl"><span class="badge-icon">⚡</span><span class="badge-stack"><span class="badge-title">Meilleur tour</span><span class="badge-pilot ${pClass(flPilote)}">${flPilote}</span><span class="badge-time">${flTemps}s</span></span></span>
         </div>
         <span class="manche-chevron">▼</span>
       </div>
@@ -1397,6 +1422,7 @@ function switchMainSection(id, btn) {
   document.getElementById('section-' + id).classList.add('active');
   btn.classList.add('active');
 }
+
 
 function renderPilotPhoto(photo, initiale, couleur) {
   if (photo) return `<img src="${photo}" alt="${initiale}">`;
