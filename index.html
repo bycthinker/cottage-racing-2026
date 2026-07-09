@@ -17,6 +17,7 @@
     --bg: #0A0A0F; --surface: #13131C; --surface2: #1C1C2A; --border: #2A2A3E;
     --text: #E8E8F0; --muted: #7A7A9A; --red: #E63946; --gold: #FFB703;
     --blue: #4CC9F0; --green: #06D6A0; --white: #FFFFFF;
+    --pilot-brice:#FFD400; --pilot-philippe:#FF8C00; --pilot-alain:#FF4FA3; --pilot-manu:#003B8E;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; min-height:100vh; overflow-x:hidden; }
@@ -73,6 +74,7 @@
   .points-bar-fill { height:100%; border-radius:3px; transition:width 1s cubic-bezier(.4,0,.2,1); }
   .fill-1{background:linear-gradient(90deg,var(--gold),#FFD60A)} .fill-2{background:linear-gradient(90deg,var(--blue),#7EB8F7)}
   .fill-3{background:linear-gradient(90deg,var(--green),#52E0C4)} .fill-4{background:linear-gradient(90deg,var(--red),#FF6B75)}
+  .fill-brice{background:var(--pilot-brice)} .fill-philippe{background:var(--pilot-philippe)} .fill-alain{background:var(--pilot-alain)} .fill-manu{background:var(--pilot-manu)}
   .points-bar-val { font-family:'Rajdhani',sans-serif; font-size:.85rem; font-weight:700; width:36px; text-align:right; color:var(--text); flex-shrink:0; }
 
   .tabs-wrap { margin-bottom:2.5rem; }
@@ -201,7 +203,7 @@
   .ct-mv.eq{color:var(--muted)}
   .champ-block,.tabs-wrap{animation:slideUp .5s ease forwards}
 
-  .p-manu{color:var(--gold)} .p-brice{color:var(--blue)} .p-alain{color:var(--green)} .p-philippe{color:var(--red)}
+  .p-manu{color:var(--pilot-manu)} .p-brice{color:var(--pilot-brice)} .p-alain{color:var(--pilot-alain)} .p-philippe{color:var(--pilot-philippe)}
 
   .empty-state { padding:2rem 1.5rem; text-align:center; color:var(--muted); font-size:.85rem; }
 
@@ -594,10 +596,10 @@
    ============================================================ */
 
 const PILOTS = [
-  { id:'manu',     name:'Manu',     color:'var(--gold)',  fillClass:'fill-1' },
-  { id:'brice',    name:'Brice',    color:'var(--blue)',  fillClass:'fill-2' },
-  { id:'alain',    name:'Alain',    color:'var(--green)', fillClass:'fill-3' },
-  { id:'philippe', name:'Philippe', color:'var(--red)',   fillClass:'fill-4' }
+  { id:'brice',    name:'Brice',    color:'var(--pilot-brice)',    fillClass:'fill-brice' },
+  { id:'philippe', name:'Philippe', color:'var(--pilot-philippe)', fillClass:'fill-philippe' },
+  { id:'alain',    name:'Alain',    color:'var(--pilot-alain)',    fillClass:'fill-alain' },
+  { id:'manu',     name:'Manu',     color:'var(--pilot-manu)',     fillClass:'fill-manu' }
 ];
 
 const CATEGORIES = [
@@ -630,7 +632,7 @@ const CALENDAR = [
    de chaque pilote (début slotcar, premier modèle, anecdote, etc.). */
 const PILOT_PROFILES = {
   manu: {
-    nom: 'Manu', numero: 95, nationalite: '🇧🇪 Belgique', couleur: 'var(--gold)',
+    nom: 'Manu', numero: 95, nationalite: '🇧🇪 Belgique', couleur: 'var(--pilot-manu)',
     photo: 'Manu head.jpeg',
     citation: '',
     valeurs: ['Expérience qui fait la différence', 'Focus sur l\'essentiel', 'Régularité tour après tour', 'Ambition sans limite'],
@@ -641,7 +643,7 @@ const PILOT_PROFILES = {
     ]
   },
   brice: {
-    nom: 'Brice', numero: 11, nationalite: '🇧🇷 Brésil', couleur: 'var(--blue)',
+    nom: 'Brice', numero: 11, nationalite: '🇧🇷 Brésil', couleur: 'var(--pilot-brice)',
     photo: 'Brice head.jpeg',
     citation: 'Chaque virage est une opportunité, chaque course un défi à relever ! Le talent, la discipline, la vitesse pour aller plus loin !',
     valeurs: ['Vitesse et Précision', 'Focus et Régularité', 'Progression Constante', "Esprit d'Équipe / Mental de Champion"],
@@ -652,7 +654,7 @@ const PILOT_PROFILES = {
     ]
   },
   alain: {
-    nom: 'Alain', numero: 60, nationalite: '🇧🇪 Belgique', couleur: 'var(--green)',
+    nom: 'Alain', numero: 60, nationalite: '🇧🇪 Belgique', couleur: 'var(--pilot-alain)',
     photo: 'Alain head.jpeg',
     citation: '',
     valeurs: ['Expérience qui fait la différence', 'Focus sur l\'essentiel', 'Régularité tour après tour', 'Ambition sans limite'],
@@ -663,7 +665,7 @@ const PILOT_PROFILES = {
     ]
   },
   philippe: {
-    nom: 'Philippe', numero: 5, nationalite: '🇧🇪 Belgique', couleur: 'var(--red)',
+    nom: 'Philippe', numero: 5, nationalite: '🇧🇪 Belgique', couleur: 'var(--pilot-philippe)',
     photo: 'Philippe head.jpeg',
     citation: 'La passion nous pousse, la rigueur nous guide, la victoire nous rassemble !',
     valeurs: ['Expérience et Maîtrise', 'Performance et Régularité', 'Passion et Détermination', 'Toujours plus loin, ensemble'],
@@ -767,6 +769,21 @@ bmw: [
         { pilote:'Alain', temps:11.469, position:4, tours:45 },
         { pilote:'Philippe', temps:10.913, position:2, tours:50 }
       ]
+    },
+    {
+      manche: 4, date: '8 juillet 2026',
+      qualifs: [
+        { pilote:'Brice', temps:9.912 },
+        { pilote:'Manu', temps:10.108 },
+        { pilote:'Philippe', temps:10.226 },
+        { pilote:'Alain', temps:11.261 }
+      ],
+      course: [
+        { pilote:'Manu', temps:10.442, position:1, tours:50 },
+        { pilote:'Brice', temps:10.292, position:2, tours:50, fl:true },
+        { pilote:'Philippe', temps:10.656, position:3, tours:50 },
+        { pilote:'Alain', temps:10.956, position:4, tours:48 }
+      ]
     }
   ],
 
@@ -814,6 +831,21 @@ bmw: [
         { pilote:'Brice', temps:10.876, position:1, tours:50, fl:true },
         { pilote:'Alain', temps:12.578, position:4, tours:44 },
         { pilote:'Philippe', temps:11.297, position:2, tours:50 }
+      ]
+    },
+    {
+      manche: 4, date: '8 juillet 2026',
+      qualifs: [
+        { pilote:'Manu', temps:10.197 },
+        { pilote:'Brice', temps:10.352 },
+        { pilote:'Philippe', temps:10.649 },
+        { pilote:'Alain', temps:12.421 }
+      ],
+      course: [
+        { pilote:'Manu', temps:10.385, position:1, tours:50 },
+        { pilote:'Brice', temps:10.372, position:2, tours:49, fl:true },
+        { pilote:'Philippe', temps:10.615, position:3, tours:49 },
+        { pilote:'Alain', temps:11.058, position:4, tours:48 }
       ]
     }
   ],
@@ -863,7 +895,22 @@ bmw: [
         { pilote:'Alain', temps:10.526, position:4, tours:48 },
         { pilote:'Philippe', temps:10.917, position:2, tours:50 }
       ]
-    } 
+    },
+    {
+      manche: 4, date: '8 juillet 2026',
+      qualifs: [
+        { pilote:'Brice', temps:9.173 },
+        { pilote:'Philippe', temps:9.506 },
+        { pilote:'Manu', temps:9.740 },
+        { pilote:'Alain', temps:10.625 }
+      ],
+      course: [
+        { pilote:'Brice', temps:9.753, position:1, tours:50, fl:true },
+        { pilote:'Philippe', temps:10.055, position:2, tours:50 },
+        { pilote:'Manu', temps:10.038, position:3, tours:49 },
+        { pilote:'Alain', temps:10.450, position:4, tours:48 }
+      ]
+    }
   ],
 
   mclaren: [
@@ -911,7 +958,22 @@ bmw: [
         { pilote:'Alain', temps:10.607, position:4, tours:47 },
         { pilote:'Philippe', temps:10.701, position:3, tours:49 }
       ]
-    } 
+    },
+    {
+      manche: 4, date: '8 juillet 2026',
+      qualifs: [
+        { pilote:'Brice', temps:9.372 },
+        { pilote:'Manu', temps:9.594 },
+        { pilote:'Philippe', temps:9.712 },
+        { pilote:'Alain', temps:11.046 }
+      ],
+      course: [
+        { pilote:'Manu', temps:9.487, position:1, tours:50, fl:true },
+        { pilote:'Brice', temps:9.738, position:2, tours:50 },
+        { pilote:'Philippe', temps:10.624, position:3, tours:49 },
+        { pilote:'Alain', temps:10.632, position:4, tours:47 }
+      ]
+    }
   ]
 
 };
@@ -1088,9 +1150,9 @@ function categoryRecords(catId) {
 
 function rankClass(i) { return ['rank-1','rank-2','rank-3','rank-4'][i] || 'rank-4'; }
 function posClass(i) { return ['pos-1','pos-2','pos-3','pos-4'][i] || 'pos-4'; }
-function fillClassForRank(i) {
-  // Couleur de barre liée au RANG affiché (1er=or,2e=bleu,3e=vert,4e=rouge) pour cohérence visuelle
-  return ['fill-1','fill-2','fill-3','fill-4'][i] || 'fill-4';
+function fillClassForPilot(name) {
+  const p = pilotInfo(name);
+  return p.fillClass || 'fill-4';
 }
 
 /* ============================================================
@@ -1122,16 +1184,16 @@ function renderPrediction() {
         <span class="prediction-manche-tag">Basé sur ${pred.manchesJouees} manche${pred.manchesJouees > 1 ? 's' : ''} disputée${pred.manchesJouees > 1 ? 's' : ''}</span>
       </div>
       <div class="prediction-body">
-        <div class="prediction-intro">D'après la forme récente sur la saison, voici qui semble le mieux placé pour briller à la prochaine manche — un teaser pour le moins sérieux, le tarmac aura le dernier mot 😏</div>
+        <div class="prediction-intro">Après la dernière manche, l’algorithme a sorti sa calculette, essuyé deux traces de pneus et rendu son verdict : voici la forme réelle du moment. C’est basé sur les points marqués, pas sur les excuses d’après-course 😏</div>
         <div class="prediction-favorite-row">
           <span class="prediction-trophy">🏆</span>
           <div>
             <div class="prediction-favorite-name ${pClass(favorite.name)}">${favorite.name}</div>
-            <div class="prediction-favorite-sub">Favori du moment · ${tendanceIcon[favorite.tendance]} ${tendanceLabel[favorite.tendance]} · ${favorite.totalPts} pts cumulés sur la saison</div>
+            <div class="prediction-favorite-sub">Favori pour la Manche ${pred.nextManche} · ${tendanceIcon[favorite.tendance]} ${tendanceLabel[favorite.tendance]} · ${favorite.totalPts} pts cumulés · attention, la piste adore humilier les favoris</div>
           </div>
         </div>
         <div class="prediction-stats-grid">${statsCardsHTML}</div>
-        <div class="prediction-disclaimer">Pronostic généré pour le fun à partir des résultats passés — aucune garantie sur le bitume !</div>
+        <div class="prediction-disclaimer">Pronostic sérieux dans les chiffres, beaucoup moins dans l’ego : la prochaine course peut encore transformer un favori en cône mobile.</div>
       </div>
     </div>`;
 }
@@ -1158,7 +1220,7 @@ function renderGeneral() {
     const pct = maxTotal > 0 ? (s.total / maxTotal * 100) : 0;
     return `<div class="points-bar-row">
       <span class="points-bar-name ${pClass(s.name)}">${s.name}</span>
-      <div class="points-bar"><div class="points-bar-fill ${fillClassForRank(i)}" style="width:${pct.toFixed(1)}%"></div></div>
+      <div class="points-bar"><div class="points-bar-fill ${fillClassForPilot(s.name)}" style="width:${pct.toFixed(1)}%"></div></div>
       <span class="points-bar-val">${s.total}</span>
     </div>`;
   }).join('');
@@ -1204,7 +1266,7 @@ function renderCatStandingsBlock(catId, catLabel) {
     const pct = maxTotal > 0 ? (s.total / maxTotal * 100) : 0;
     return `<div class="points-bar-row">
       <span class="points-bar-name ${pClass(s.name)}">${s.name}</span>
-      <div class="points-bar"><div class="points-bar-fill ${fillClassForRank(i)}" style="width:${pct.toFixed(1)}%"></div></div>
+      <div class="points-bar"><div class="points-bar-fill ${fillClassForPilot(s.name)}" style="width:${pct.toFixed(1)}%"></div></div>
       <span class="points-bar-val">${s.total}</span>
     </div>`;
   }).join('');
@@ -1582,8 +1644,8 @@ const CIRCUIT_SESSIONS = [
    CIRCUIT ENGINE
    ============================================================ */
 const PILOT_COLOR_MAP = {
-  MANU:"var(--gold)", BRICE:"var(--blue)", ALAIN:"var(--green)", PHILIPPE:"var(--red)",
-  MAUDE:"#a855f7", "RAFAËL":"#06b6d4", DIMITRI:"#f97316", THIERRY:"#ec4899", DANIEL:"#84cc16"
+  BRICE:'var(--pilot-brice)', PHILIPPE:'var(--pilot-philippe)', ALAIN:'var(--pilot-alain)', MANU:'var(--pilot-manu)',
+  MAUDE:'#a855f7', 'RAFAËL':'#06b6d4', DIMITRI:'#f97316', THIERRY:'#ec4899', DANIEL:'#84cc16'
 };
 
 let _cSessIdx  = CIRCUIT_SESSIONS.length - 1;  // session active (dernière par défaut)
@@ -1605,10 +1667,16 @@ function _cComputeMv(idx){
   const cur=CIRCUIT_SESSIONS[idx].laps;
   if(idx===0) return cur.map(l=>({...l,mv:0}));
   const prev=CIRCUIT_SESSIONS[idx-1].laps;
+
+  // Important : on compare une voiture avec le même pilote + la même voiture.
+  // Avant, le matching se faisait uniquement sur le nom de voiture : si deux pilotes
+  // avaient une Porsche 911 RSR - N°54, la dernière ligne de la session précédente
+  // écrasait la première et créait de faux mouvements (+8 places, etc.).
+  const key = l => `${(l.pilote||'').trim().toUpperCase()}|${_cNormCar(l.voiture)}`;
   const pm={};
-  prev.forEach(l=>{ pm[_cNormCar(l.voiture)]=l.pos; });
+  prev.forEach(l=>{ pm[key(l)]=l.pos; });
   return cur.map(l=>{
-    const p=pm[_cNormCar(l.voiture)];
+    const p=pm[key(l)];
     return {...l, mv:(p!==undefined)?p-l.pos:null};
   });
 }
